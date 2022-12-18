@@ -1,0 +1,43 @@
+{
+  "name": "prng",
+  "version": "0.1.0",
+  "description": "Pseudo-random Number Generators",
+  "main": "src/tsx.js",
+  "scripts": {
+    "start": "webpack serve --port 3000",
+    "build": "NODE_ENV=production webpack"
+  },
+  "keywords": [
+    "random"
+  ],
+  "author": "Sébastien PONT",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.9",
+    "css-loader": "^6.7.3",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.7.2",
+    "sass": "^1.57.0",
+    "sass-loader": "^13.2.0",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.4",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.20.2",
+    "@babel/register": "^7.18.9",
+    "dotenv": "^16.0.3",
+    "echarts": "^5.4.1",
+    "echarts-for-react": "^3.0.2",
+    "fork-ts-checker-webpack-plugin": "^7.2.14",
+    "path-browserify": "^1.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-feather": "^2.0.10",
+    "style-loader": "^3.3.1",
+    "webpack-glsl-loader": "^1.0.1"
+  }
+}

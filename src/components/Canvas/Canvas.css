@@ -1,0 +1,18 @@
+#canvas {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.canvas-container {
+    position: relative;
+    width: 50%;
+    left: 25%;
+}
+
+.canvas-container:after {
+    content: "";
+    display: block;
+    height: 0;
+    padding-bottom: 100%;
+}

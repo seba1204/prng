@@ -1,0 +1,86 @@
+.mainContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #2c3e50;
+    padding: 0px;
+    margin: 0px;
+}
+
+.code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.5em;
+    flex: 1;
+    color: #2c3e50;
+    background-color: #112538;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    height: calc(100vh - 40px);
+    color: #ecf0f1;
+}
+
+.output {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.5em;
+    flex: 2;
+    color: #2c3e50;
+    background-color: #112538;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.webGL {
+    flex: 2;
+    width: 100%;
+    position: relative;
+}
+
+.graphs {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.graph1 {
+    height: 100%;
+    width: 100%;
+    flex: 1;
+}
+
+.graph2 {
+    height: 100%;
+    width: 100%;
+    flex: 1;
+}
+
+.bordered {
+    border: 1px solid #2c3e50;
+}
+
+/* overlat button bottom right of the relative current div*/
+.webGL .button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #1d69b4;
+    z-index: 99;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
