@@ -158,21 +158,26 @@ const App = () => {
                         {/* <br />
                         <br /> */}
                         {"gaussian = "}
-                        {
-                            "\
-function gaussian(mean: number = 0, stdDev: number = 1): number {\
-    let u = 0, v = 0;\
-    while (u === 0) u = Math.random();\
-    while (v === 0) v = Math.random();\
-    let num =\
-        Math.sqrt(-2.0 * Math.log(u)) *\
-        Math.cos(2.0 * Math.PI * v);\
-    \
-    num = num * stdDev + mean;\
-    return num;\
-}\
-"
-                        }
+                        <br />
+                        {"function gaussian(mean: number = 0, stdDev: number = 1): number {"}
+                        <br />
+                        {"  let u = 0, v = 0;"}
+                        <br />
+                        {"  while (u === 0) u = Math.random();"}
+                        <br />
+                        {"  while (v === 0) v = Math.random();"}
+                        <br />
+                        {"  let num ="}
+                        <br />
+                        {"      Math.sqrt(-2.0 * Math.log(u)) *"}
+                        <br />
+                        {"      Math.cos(2.0 * Math.PI * v);"}
+                        <br />
+                        {"  num = num * stdDev + mean;"}
+                        <br />
+                        {"  return num;"}
+                        <br />
+                        {"}"}
                     </code>
                 </pre>
 
