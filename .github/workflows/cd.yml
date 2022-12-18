@@ -22,7 +22,7 @@ jobs:
           npm run build
       - name: Build images
         run: |
-          docker build -t ghcr.io/photonsquid/riverbed .
+          docker build -t ghcr.io/seba1204/prng .
       - name: Login to GitHub Packages
         env:
           TOKEN: ${{ secrets.SEBA_TOKEN }}
@@ -32,9 +32,9 @@ jobs:
         id: push-to-gh-packages
         run: |
           tag=$(git rev-parse --short HEAD)
-          docker tag ghcr.io/photonsquid/riverbed ghcr.io/photonsquid/riverbed:$tag
-          docker push ghcr.io/photonsquid/riverbed:$tag
-          docker push ghcr.io/photonsquid/riverbed
+          docker tag ghcr.io/seba1204/prng ghcr.io/seba1204/prng:$tag
+          docker push ghcr.io/seba1204/prng:$tag
+          docker push ghcr.io/seba1204/prng
           echo ::set-output name=tag::$tag
       
       - name: Logout
