@@ -157,8 +157,22 @@ const App = () => {
                         {LCG.toString()} */}
                         {/* <br />
                         <br /> */}
-                        {"BoxMuller = "}
-                        {gaussian.toString()}
+                        {"gaussian = "}
+                        {
+                            "\
+function gaussian(mean: number = 0, stdDev: number = 1): number {\
+    let u = 0, v = 0;\
+    while (u === 0) u = Math.random();\
+    while (v === 0) v = Math.random();\
+    let num =\
+        Math.sqrt(-2.0 * Math.log(u)) *\
+        Math.cos(2.0 * Math.PI * v);\
+    \
+    num = num * stdDev + mean;\
+    return num;\
+}\
+"
+                        }
                     </code>
                 </pre>
 
