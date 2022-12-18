@@ -1,0 +1,51 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  publish:
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Update repos list
+        run: sudo apt-get update
+      - name: Install dependencies
+        run: npm install
+      - name: Build site
+        run: |
+          npm run build
+      - name: Build images
+        run: |
+          docker build -t ghcr.io/photonsquid/riverbed .
+      - name: Login to GitHub Packages
+        env:
+          TOKEN: ${{ secrets.SEBA_TOKEN }}
+        run: |
+          echo ${{ env.TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Push to GitHub Packages
+        id: push-to-gh-packages
+        run: |
+          tag=$(git rev-parse --short HEAD)
+          docker tag ghcr.io/photonsquid/riverbed ghcr.io/photonsquid/riverbed:$tag
+          docker push ghcr.io/photonsquid/riverbed:$tag
+          docker push ghcr.io/photonsquid/riverbed
+          echo ::set-output name=tag::$tag
+      
+      - name: Logout
+        run: |
+          docker logout
+      
+      - name: Create commit comment
+        uses: peter-evans/commit-comment@v2
+        with:
+          body: |
+            ## Summary
+            ✅ Commit successfully deployed to GitHub packages.
+            🔗 Commit reference: `${{ github.sha }}`
+            📦 Deployed image tag: `${{ steps.push-to-gh-packages.outputs.tag }}`

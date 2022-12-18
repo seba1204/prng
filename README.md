@@ -7,7 +7,6 @@
 - [Task](#task)
 - [Technologies](#technologies)
 
-
 ## Task
 
 Create a PRNG that delivers 2D random variables with a normal distribution visualizes the first n drawn vectors.
