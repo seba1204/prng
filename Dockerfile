@@ -1,6 +1,6 @@
 ARG PORT=6095
 
-FROM node:14-alpine AS node
+FROM node:latest AS node
 
 
 # Builder stage
@@ -26,7 +26,7 @@ RUN npm run build
 EXPOSE ${PORT}
 
 # Run development server
-ENTRYPOINT [ "npm", "run", "dev" ]
+ENTRYPOINT [ "npm", "start" ]
 
 # Final stage
 
@@ -36,7 +36,8 @@ FROM node AS final
 ENV NODE_ENV production
 
 # Update the system
-RUN apk --no-cache -U upgrade
+RUN apt-get update
+RUN apt-get upgrade -y
 
 # Prepare destination directory and ensure user node owns it
 RUN mkdir -p /home/node/app/dist && chown -R node:node /home/node/app
@@ -50,14 +51,14 @@ RUN npm i -g pm2
 # Copy package.json, package-lock.json and process.yml
 COPY package*.json process.yml ./
 
-# Switch to user node
-USER node
-
 # Install libraries as user node
 RUN npm i --only=production
 
 # Copy js files and change ownership to user node
 COPY --chown=node:node --from=builder /app/dist ./dist
+
+# Switch to user node
+USER node
 
 # Open desired port
 EXPOSE ${PORT}
