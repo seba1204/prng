@@ -28,7 +28,7 @@ const Code = (props: propsTypes) => {
     }
 
     return (
-        <div className="code">
+        <>
 
             <CodeEditor
                 value={code}
@@ -43,7 +43,7 @@ const Code = (props: propsTypes) => {
                 onChange={(evn) => setCode(evn.target.value)}
             />
             <button onClick={runCode}>Run</button>
-        </div>
+        </>
     )
 }
 
