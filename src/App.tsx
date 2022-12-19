@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Code, WebGL } from "./components";
+import { Charts, Code, Select, Slider, WebGL } from "./components";
 import { Point } from "./lib/LULA/types";
 import { gaussian } from './utils/Prng';
 import Engine from './webgl/Engine';
@@ -25,8 +25,6 @@ const App = () => {
         updateRandomData();
     }, []);
 
-
-
     const updateRandomData = () => {
 
         const points = [];
@@ -47,6 +45,8 @@ const App = () => {
     return (
         <div className='mainContainer'>
             <div className='code'>
+                <Select name='Random function' />
+                <Slider value={nbOfPts} name={'Number of points'} handleChange={setNbOfPts} />
                 <Code textFile={rndFunction} />
             </div>
 
@@ -56,10 +56,10 @@ const App = () => {
                 </div>
                 <div className='graphs'>
                     <div className='graph1'>
-                        {/* <Charts.Distribution data={points.map(p => p.x)} title='x distribution' /> */}
+                        <Charts.Distribution data={points.map(p => p.x)} title='x distribution' />
                     </div>
                     <div className='graph2'>
-                        {/* <Charts.Distribution data={points.map(p => p.y)} title='xydistribution' /> */}
+                        <Charts.Distribution data={points.map(p => p.y)} title='xydistribution' />
                     </div>
                 </div>
             </div>

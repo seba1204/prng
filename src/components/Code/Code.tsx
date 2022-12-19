@@ -21,9 +21,6 @@ const Code = (props: propsTypes) => {
             if (transpiledOutput.diagnostics.length > 0) {
                 console.log("Error");
             }
-            // else {
-            //     eval(transpiledOutput.outputText);
-            // }
         }
     }
 
