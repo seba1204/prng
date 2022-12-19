@@ -14,42 +14,36 @@
 }
 
 .params {
-    border: 1px solid black;
     grid-area: param;
-    background-color: red;
 }
 
 .code {
-    border: 1px solid black;
     grid-area: code;
-    background-color: orange;
     overflow: auto;
+    background-color: #161B22;
 }
 
 .dragbar {
     grid-area: dragbar;
-    background-color: green;
     cursor: row-resize;
+    background-color: rgba(0, 0, 0, 0.438);
 }
 
 .dragbar1 {
     grid-area: dragbar1;
-    background-color: green;
     cursor: col-resize;
+    background-color: rgba(0, 0, 0, 0.438);
 }
 
 
 .webGL {
     position: relative;
-    border: 1px solid black;
     grid-area: webgl;
-    background-color: blue;
     display: block;
 }
 
 .graphs {
     grid-area: output;
-    background-color: yellow;
     overflow: auto;
     display: flex;
     flex-direction: row;

@@ -56,25 +56,37 @@ const App = () => {
             const ratio = x / width;
             const leftPanelWidth = ratio * 100;
             const rightPanelWidth = (1 - ratio) * 100;
-            const gridTemplateColumns = `${leftPanelWidth}% 6px ${rightPanelWidth}%`;
+
+            if (leftPanelWidth < 20) {
+                return;
+            }
+            if (rightPanelWidth < 10) {
+                return;
+            }
+
+            const gridTemplateColumns = `1fr 6px ${rightPanelWidth}%`;
+
             setGridTemplateColumns(gridTemplateColumns);
         }
         if (isDraggingV) {
-            // get height of the main container
-            const height = e.currentTarget.clientHeight;
-            // get the y position of the mouse
-            const y = e.clientY;
-            // get param panel height
-            const paramPanelHeight = document.querySelector('.params')?.clientHeight || 0;
-            // get the ratio of the mouse position
-            const ratio = y / height;
-            // get ration of param panel
-            const paramPanelRatio = (paramPanelHeight) / height * 100;
-            const draggerRatio = 6 / height * 100;
-            const codePanelHeight = ratio * 100;
-            const bottomPanelHeight = (1 - ratio) * 100;
-            const gridTemplateRows = `${paramPanelHeight + 2}px ${codePanelHeight - paramPanelRatio}% 6px ${bottomPanelHeight - draggerRatio}%`;
-            console.log(gridTemplateRows);
+
+            const bottomPanelHeight = e.currentTarget.clientHeight - e.clientY;
+            const bottomPanelRatio = (1 - e.clientY / e.currentTarget.clientHeight) * 100;
+
+            // get window width
+            const width = e.currentTarget.clientWidth;
+
+            const chartWidth = bottomPanelHeight * (3 / 2);
+            // limit the bottom panel height
+            if (3 * chartWidth > width) {
+                return;
+            }
+            if (bottomPanelHeight < 100) {
+                return;
+            }
+
+            const gridTemplateRows = `min-content 2fr 6px ${bottomPanelRatio}%`;
+
             setGridTemplateRows(gridTemplateRows);
         }
     }
@@ -112,8 +124,8 @@ const App = () => {
             </div>
             <div className='graphs'>
                 <Charts.Distribution data={points.map(p => p.x)} title='x distribution' />
-                <Charts.Distribution data={points.map(p => p.y)} title='xydistribution' />
-                <Charts.Distribution data={points.map(p => p.y)} title='xydistribution' />
+                <Charts.Distribution data={points.map(p => p.y)} title='y distribution' />
+                <Charts.Distribution data={points.map(p => p.y)} title='z distribution' />
             </div>
         </div>
     );

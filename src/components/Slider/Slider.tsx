@@ -15,8 +15,12 @@ const Slider = ({ name, handleChange, value }: propsTypes) => {
                 onChange={({ x }) => handleChange(x)}
                 styles={{
                     active: {
-                        backgroundColor: '#8e44ad'
-                    }
+                        backgroundColor: '#18A084',
+                    },
+                    track: {
+                        width: '100%',
+                        backgroundColor: "rgba(0, 0, 0, 0.438)",
+                    },
                 }}
                 xstep={10}
                 xmin={100}
