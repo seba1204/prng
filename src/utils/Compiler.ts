@@ -1,16 +1,16 @@
-import ts from "typescript";
+import { CompilerOptions, ModuleKind, ScriptTarget, transpileModule, TranspileOutput } from "typescript";
 
-const compile = (source: string): ts.TranspileOutput => {
-    const options: ts.CompilerOptions = {
+const compile = (source: string): TranspileOutput => {
+    const options: CompilerOptions = {
         noEmitOnError: true,
         noImplicitAny: true,
-        target: ts.ScriptTarget.ES5,
-        module: ts.ModuleKind.CommonJS
+        target: ScriptTarget.ES5,
+        module: ModuleKind.CommonJS
     }
 
     // const source = "let x: string  = 'string'";
 
-    let result = ts.transpileModule(source, { compilerOptions: options });
+    let result = transpileModule(source, { compilerOptions: options });
 
     return result;
 }

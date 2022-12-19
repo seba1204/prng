@@ -44,6 +44,7 @@ const App = () => {
 
     return (
         <div className='mainContainer'>
+
             <div className='params'>
                 <Select name='Random function' className='select' />
                 <Slider value={nbOfPts} name={'Number of points'} handleChange={setNbOfPts} />

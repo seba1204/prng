@@ -18,6 +18,9 @@ const Slider = ({ name, handleChange, value }: propsTypes) => {
                         backgroundColor: '#8e44ad'
                     }
                 }}
+                xstep={10}
+                xmin={100}
+                xmax={100000}
             />
         </div>
     );
