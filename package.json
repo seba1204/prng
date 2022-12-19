@@ -14,11 +14,13 @@
   "license": "MIT",
   "repository": "https://github.com/seba1204/prng",
   "devDependencies": {
+    "@types/node": "^18.11.17",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
     "css-loader": "^6.7.3",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.2",
+    "raw-loader": "^4.0.2",
     "sass": "^1.57.0",
     "sass-loader": "^13.2.0",
     "ts-loader": "^9.4.2",
@@ -30,6 +32,7 @@
   "dependencies": {
     "@babel/preset-env": "^7.20.2",
     "@babel/register": "^7.18.9",
+    "@uiw/react-textarea-code-editor": "^2.0.6",
     "dotenv": "^16.0.3",
     "echarts": "^5.4.1",
     "echarts-for-react": "^3.0.2",

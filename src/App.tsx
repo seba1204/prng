@@ -2,15 +2,19 @@ import ReactEcharts from "echarts-for-react";
 import React, { useEffect, useState } from 'react';
 import { RefreshCcw } from 'react-feather';
 import './App.css';
-import { Canvas, PictureButton } from "./components";
+import { Canvas, Code, PictureButton } from "./components";
 import { Point } from "./lib/LULA/types";
 import { gaussian } from './utils/Prng';
 import Engine from './webgl/Engine';
 
+
+import gaussianFunc from './constants/gaussian.txt';
+
+
 const App = () => {
 
     const [points, setPoints] = useState<Point[]>([]);
-    const [engine, setEngine] = useState<Engine>(new Engine());
+    const [engine, _] = useState<Engine>(new Engine());
 
 
 
@@ -19,6 +23,8 @@ const App = () => {
     useEffect(() => {
         updateRandomData();
     }, []);
+
+
 
     const updateRandomData = () => {
 
@@ -38,7 +44,6 @@ const App = () => {
         engine.updatePoints(points)
 
         setPoints(points);
-        console.log('updated points')
     }
 
 
@@ -66,7 +71,6 @@ const App = () => {
             show: false
         },
         series: {
-            // name: 'Random Data',
             type: 'line',
             smooth: true,
 
@@ -141,8 +145,6 @@ const App = () => {
             }]
         }
 
-        console.log(newOptions)
-
         return newOptions
     }
 
@@ -151,36 +153,9 @@ const App = () => {
     return (
         <div className='mainContainer'>
             <div className='code'>
-                <pre>
-                    <code>
-                        {/* {"LCG = "}
-                        {LCG.toString()} */}
-                        {/* <br />
-                        <br /> */}
-                        {"gaussian = "}
-                        <br />
-                        {"function gaussian(mean: number = 0, stdDev: number = 1): number {"}
-                        <br />
-                        {"  let u = 0, v = 0;"}
-                        <br />
-                        {"  while (u === 0) u = Math.random();"}
-                        <br />
-                        {"  while (v === 0) v = Math.random();"}
-                        <br />
-                        {"  let num ="}
-                        <br />
-                        {"      Math.sqrt(-2.0 * Math.log(u)) *"}
-                        <br />
-                        {"      Math.cos(2.0 * Math.PI * v);"}
-                        <br />
-                        {"  num = num * stdDev + mean;"}
-                        <br />
-                        {"  return num;"}
-                        <br />
-                        {"}"}
-                    </code>
-                </pre>
-
+                <code>
+                    <Code textFile={gaussianFunc} />
+                </code>
             </div>
 
             <div className='output'>

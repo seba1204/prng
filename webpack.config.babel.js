@@ -59,7 +59,13 @@ export const module = {
                 "sass-loader",
             ],
         },
-    ]
+        // load text files
+        {
+            test: /\.txt$/,
+            use: 'raw-loader'
+        },
+    ],
+    noParse: [require.resolve('typescript/lib/typescript.js')],
 };
 
 // resolve extensions for importing files without specifying extension name
