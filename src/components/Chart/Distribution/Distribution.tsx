@@ -1,5 +1,6 @@
 import ReactEcharts from "echarts-for-react";
 import React from "react";
+import "./Distribution.css";
 import options from "./Distribution.options";
 
 import { defaultProps, propsTypes } from "./Distribution.props";
@@ -50,10 +51,13 @@ const Distribution = (props: propsTypes) => {
     }
 
     return (
-        <ReactEcharts
-            option={computeOptions()}
-            style={{ width: "100%", height: "100%" }}
-        ></ReactEcharts>
+        <div className="chart-container">
+            <ReactEcharts
+                option={computeOptions()}
+                style={{ height: "100%", width: "100%" }}
+                className="chart"
+            ></ReactEcharts>
+        </div>
     );
 };
 

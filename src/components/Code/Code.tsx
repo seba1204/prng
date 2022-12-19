@@ -30,7 +30,7 @@ const Code = (props: propsTypes) => {
             <CodeEditor
                 value={code}
                 language="ts"
-                placeholder="Please enter  code."
+                placeholder="Please enter TS code."
                 padding={15}
                 style={{
                     fontSize: 12,

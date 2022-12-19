@@ -1,92 +1,60 @@
-div {
-    /* border: 1px solid black; */
+.nmp {
     margin: 0;
     padding: 0;
 }
 
 .mainContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
+    display: grid;
     height: 100vh;
-    width: 100vw;
+    grid-template-areas:
+        'param dragbar1 webgl'
+        'code dragbar1 webgl'
+        'dragbar dragbar dragbar'
+        'output output output';
+    grid-template-rows: min-content 2fr 6px 1fr;
+    grid-template-columns: 1fr 6px 1fr;
 }
 
-/* make webgl div always on top, and not scrolling */
-.webGL {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 300px;
-    z-index: 1;
-    background-color: #2c3e50;
-    /* add shadow to the bottom */
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-}
-
-/* make params below .webGL div*/
 .params {
-    order: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding-top: 310px;
+    border: 1px solid black;
+    grid-area: param;
+    background-color: red;
+    overflow: auto;
+}
+
+.code {
+    border: 1px solid black;
+    grid-area: code;
+    background-color: orange;
+    overflow: auto;
+}
+
+.dragbar {
+    grid-area: dragbar;
+    background-color: green;
+    cursor: row-resize;
+}
+
+.dragbar1 {
+    grid-area: dragbar1;
+    background-color: green;
+    cursor: col-resize;
+}
+
+
+.webGL {
+    position: relative;
+    border: 1px solid black;
+    grid-area: webgl;
+    background-color: blue;
+    display: block;
 }
 
 .graphs {
-    order: 3;
+    grid-area: output;
+    background-color: yellow;
+    overflow: auto;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
     justify-content: center;
-    width: 100%;
-}
-
-.graphs>div {
-    width: 100%;
-    height: 25vh;
-}
-
-/* child of params */
-.params>div {
-    width: 100%;
-}
-
-
-.code {
-    order: 4;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 1.5em;
-    color: #2c3e50;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 5px;
-    width: 100%;
-    color: #ecf0f1;
-}
-
-@media only screen and (min-width: 768px) {
-
-    /* for desktops */
-    .webGL {
-        height: 500px;
-    }
-
-    .params {
-        padding-top: 510px;
-    }
-
-    .graphs>div {
-        height: 50vh;
-    }
-
-    .code {
-        font-size: 2em;
-    }
-
-
 }
