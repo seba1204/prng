@@ -5,7 +5,7 @@
     justify-content: center;
     height: 100vh;
     width: 100vw;
-    background-color: #2c3e50;
+    background-color: red;
     padding: 0px;
     margin: 0px;
 }
@@ -15,7 +15,7 @@
     font-size: 1.5em;
     flex: 1;
     color: #2c3e50;
-    background-color: #112538;
+    background-color: green;
     padding: 10px;
     margin: 10px;
     border-radius: 5px;
@@ -28,7 +28,7 @@
     font-size: 1.5em;
     flex: 2;
     color: #2c3e50;
-    background-color: #112538;
+    background-color: blue;
     padding: 10px;
     margin: 10px;
     border-radius: 5px;
@@ -43,6 +43,7 @@
     flex: 2;
     width: 100%;
     position: relative;
+    background-color: aqua;
 }
 
 .graphs {
@@ -53,6 +54,7 @@
     justify-content: center;
     height: 100%;
     width: 100%;
+    background-color: coral;
 }
 
 .graph1 {
@@ -65,4 +67,27 @@
     height: 100%;
     width: 100%;
     flex: 1;
+}
+
+@media only screen and (max-width: 768px) {
+
+    .mainContainer {
+        flex-direction: column;
+    }
+
+    .code {
+        height: calc(50vh - 40px);
+    }
+
+    .output {
+        height: calc(50vh - 40px);
+    }
+
+    .webGL {
+        height: calc(50vh - 40px);
+    }
+
+    .graphs {
+        height: calc(50vh - 40px);
+    }
 }
