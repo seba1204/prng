@@ -11,15 +11,12 @@
         'code dragbar1 webgl'
         'dragbar dragbar dragbar'
         'output output output';
-    grid-template-rows: min-content 2fr 6px 1fr;
-    grid-template-columns: 1fr 6px 1fr;
 }
 
 .params {
     border: 1px solid black;
     grid-area: param;
     background-color: red;
-    overflow: auto;
 }
 
 .code {
