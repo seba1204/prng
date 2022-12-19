@@ -39,7 +39,6 @@ const Code = (props: propsTypes) => {
                 }}
                 onChange={(evn) => setCode(evn.target.value)}
             />
-            <button onClick={runCode}>Run</button>
         </>
     )
 }

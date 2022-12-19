@@ -44,23 +44,22 @@ const App = () => {
 
     return (
         <div className='mainContainer'>
-            <div className='code'>
-                <Select name='Random function' />
+            <div className='params'>
+                <Select name='Random function' className='select' />
                 <Slider value={nbOfPts} name={'Number of points'} handleChange={setNbOfPts} />
+            </div>
+            <div className='code'>
                 <Code textFile={rndFunction} />
             </div>
-
-            <div className='output'>
-                <div className='webGL'>
-                    <WebGL engine={engine} onClick={updateRandomData} />
+            <div className='webGL'>
+                <WebGL engine={engine} onClick={updateRandomData} />
+            </div>
+            <div className='graphs'>
+                <div className='graph1'>
+                    <Charts.Distribution data={points.map(p => p.x)} title='x distribution' />
                 </div>
-                <div className='graphs'>
-                    <div className='graph1'>
-                        <Charts.Distribution data={points.map(p => p.x)} title='x distribution' />
-                    </div>
-                    <div className='graph2'>
-                        <Charts.Distribution data={points.map(p => p.y)} title='xydistribution' />
-                    </div>
+                <div className='graph2'>
+                    <Charts.Distribution data={points.map(p => p.y)} title='xydistribution' />
                 </div>
             </div>
         </div>

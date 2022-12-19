@@ -5,7 +5,7 @@ import { defaultProps, propsTypes } from "./Select.props";
 
 import functions from '../../constants';
 
-const Select = ({ handleChange, value, name }: propsTypes) => {
+const Select = ({ handleChange, value, name, className }: propsTypes) => {
 
     const optionss = functions.map((func) => {
         return {
@@ -15,7 +15,7 @@ const Select = ({ handleChange, value, name }: propsTypes) => {
     })
 
     return (
-        <div className='Select'>
+        <div className={className}>
             {name && <div className='Select-name'>{name + " :"}</div>}
             <RSelect
                 options={optionss}
