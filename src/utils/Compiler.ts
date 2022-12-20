@@ -7,12 +7,16 @@ const compile = (source: string): TranspileOutput => {
         target: ScriptTarget.ES5,
         module: ModuleKind.CommonJS
     }
-
-    // const source = "let x: string  = 'string'";
-
-    let result = transpileModule(source, { compilerOptions: options });
-
-    return result;
+    return transpileModule(source, { compilerOptions: options });
 }
 
-export default compile;
+// execute function with varying parameters
+const execute = (compiled: string): any => {
+    try {
+        return new Function('"use strict";return (' + compiled + ')')();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export { compile, execute };

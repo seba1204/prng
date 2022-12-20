@@ -3,8 +3,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import './App.css';
 import { Charts, Code, Select, Setting, Slider, WebGL } from "./components";
 import { Point } from "./lib/LULA/types";
+import { compile, execute } from './utils/Compiler';
 import { getParamsFromString } from './utils/parser';
-import { gaussian } from './utils/Prng';
 import Engine from './webgl/Engine';
 
 
@@ -13,7 +13,7 @@ import functions, { Funcs } from './constants';
 const App = () => {
 
     const [points, setPoints] = useState<Point[]>([]);
-    const [nbOfPts, setNbOfPts] = useState<number>(50000);
+    const [nbOfPts, setNbOfPts] = useState<number>(700);
     const [rndFunction, setRndFunction] = useState<Funcs>(functions[0]);
     const [engine, _] = useState<Engine>(new Engine());
     const [isDraggingH, setIsDraggingH] = useState<boolean>(false);
@@ -66,10 +66,13 @@ const App = () => {
 
     const updateRandomData = () => {
         const points = [];
+        const compiledCode = compile(rndFunction.content).outputText;
+        const F = execute(compiledCode);
+        console.log('computing...')
         for (let i = 0; i < nbOfPts; i++) {
             points.push({
-                x: gaussian(0, 0.2),
-                y: gaussian(0, 0.2)
+                x: F(0, 0.2),
+                y: F(0, 0.2)
             });
 
         }

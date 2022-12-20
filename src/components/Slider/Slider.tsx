@@ -26,7 +26,7 @@ const Slider = (props: propsTypes) => {
                 }}
                 xstep={100}
                 xmin={1000}
-                xmax={100000}
+                xmax={20000}
                 onDragEnd={onEnd}
             />
         </div>
