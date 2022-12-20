@@ -13,3 +13,9 @@ export default [
         content: uniforms,
     },
 ];
+
+export type Funcs = {
+    name: string,
+    label: string,
+    content: string,
+}

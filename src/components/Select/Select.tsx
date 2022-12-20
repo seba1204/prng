@@ -3,34 +3,29 @@ import React from "react";
 import RSelect from 'react-select';
 import { defaultProps, propsTypes } from "./Select.props";
 
-import functions from '../../constants';
+import './Select.css';
 
-const Select = ({ handleChange, value, name, className }: propsTypes) => {
-
-    const optionss = functions.map((func) => {
-        return {
-            value: func.name,
-            label: func.label
-        }
-    })
-
+const Select = (props: propsTypes) => {
+    const { name, className } = props;
     return (
-        <div className={className}>
+        <div className={className && className}>
             {name && <div className='Select-name'>{name + " :"}</div>}
             <RSelect
-                options={optionss}
+                {...props}
+                defaultValue={props.options[0]}
                 theme={(theme) => ({
                     ...theme,
                     borderRadius: 0,
                     colors: {
                         ...theme.colors,
                         primary25: "#2c3e50",
-                        neutral0: "black",
+                        neutral0: "rgba(0, 0, 0, 0.428)",
                         primary: "#2980b9",
                         neutral80: "white",
                         neutral90: "white",
                     },
-                })} />
+                })}
+            />
         </div>
     )
 }

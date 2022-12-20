@@ -1,15 +1,14 @@
-import React from 'react';
+import RSelect from 'react-select';
 
 type propsTypes = {
-    handleChange?: (value: number) => void;
     name?: string;
-    value?: number;
-} & typeof defaultProps & React.HTMLAttributes<HTMLDivElement>;
+    className?: string;
+    onChange?: (e: any) => void
+    options: { value: any, label: string }[]
+} & typeof RSelect;
 
 const defaultProps = {
     name: '',
-    value: 0,
-    handleChange: () => { },
 }
 
 export { propsTypes, defaultProps };

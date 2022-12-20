@@ -1,33 +1,51 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './App.css';
 import { Charts, Code, Select, Slider, WebGL } from "./components";
 import { Point } from "./lib/LULA/types";
 import { gaussian } from './utils/Prng';
 import Engine from './webgl/Engine';
 
-
-import gaussianFunc from './constants/gaussian.txt';
-
+import functions from './constants';
 
 const App = () => {
 
     const [points, setPoints] = useState<Point[]>([]);
     const [nbOfPts, setNbOfPts] = useState<number>(10000);
-    const [rndFunction, setRndFunction] = useState<string>(gaussianFunc);
+    const [rndFunction, setRndFunction] = useState<string>(functions[0].content);
     const [engine, _] = useState<Engine>(new Engine());
     const [isDraggingH, setIsDraggingH] = useState<boolean>(false);
     const [isDraggingV, setIsDraggingV] = useState<boolean>(false);
-    const [gridTemplateColumns, setGridTemplateColumns] = useState<string>('1fr 6px 1fr');
+    const [gridTemplateColumns, setGridTemplateColumns] = useState<string>('2fr 6px 1fr');
     const [gridTemplateRows, setGridTemplateRows] = useState<string>('min-content 2fr 6px 1fr');
 
 
+    const onSelectChange = (e: any) => {
+        const { value } = e;
+        const f = functions.filter(f => f.name === value)[0]
+        console.log(`function name: ${f.name}`)
+        console.log(`function content: ${f.content}`)
+        setRndFunction(f.content);
+    }
 
+    const handleCodeChange = (evn: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setRndFunction(evn.target.value)
+    }
+
+    const options = useMemo(() => {
+        return functions.map(f => (
+            {
+                value: f.name,
+                label: f.label
+            }
+        ))
+    }, [functions])
 
     // useEffect to generate random data
     useEffect(() => {
         updateRandomData();
     }, []);
+
 
     const updateRandomData = () => {
 
@@ -111,13 +129,13 @@ const App = () => {
         >
 
             <div className='params'>
-                <Select name='Random function' className='select' />
+                <Select name='Random function' onChange={onSelectChange} className='select' options={options} />
                 <Slider value={nbOfPts} name={'Number of points'} handleChange={setNbOfPts} />
             </div>
             <div className='dragbar' onMouseDown={startDragV}></div>
             <div className='dragbar1' onMouseDown={startDragH}></div>
             <div className='code'>
-                <Code textFile={rndFunction} />
+                <Code code={rndFunction} onChange={handleCodeChange} />
             </div>
             <div className='webGL'>
                 <WebGL engine={engine} onClick={updateRandomData} />
