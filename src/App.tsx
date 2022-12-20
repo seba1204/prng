@@ -1,7 +1,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import './App.css';
-import { Charts, Code, Select, Slider, WebGL } from "./components";
+import { Charts, Code, Select, Setting, Slider, WebGL } from "./components";
 import { Point } from "./lib/LULA/types";
 import { gaussian } from './utils/Prng';
 import Engine from './webgl/Engine';
@@ -11,14 +11,14 @@ import functions from './constants';
 const App = () => {
 
     const [points, setPoints] = useState<Point[]>([]);
-    const [nbOfPts, setNbOfPts] = useState<number>(10000);
+    const [nbOfPts, setNbOfPts] = useState<number>(50000);
     const [rndFunction, setRndFunction] = useState<string>(functions[0].content);
     const [engine, _] = useState<Engine>(new Engine());
     const [isDraggingH, setIsDraggingH] = useState<boolean>(false);
     const [isDraggingV, setIsDraggingV] = useState<boolean>(false);
     const [gridTemplateColumns, setGridTemplateColumns] = useState<string>('2fr 6px 1fr');
     const [gridTemplateRows, setGridTemplateRows] = useState<string>('min-content 2fr 6px 1fr');
-
+    const [updateData, setUpdatData] = useState<boolean>(false)
 
     const onSelectChange = (e: any) => {
         const { value } = e;
@@ -30,6 +30,13 @@ const App = () => {
 
     const handleCodeChange = (evn: React.ChangeEvent<HTMLTextAreaElement>) => {
         setRndFunction(evn.target.value)
+    }
+
+    const handleEndDrag = (e: MouseEvent) => {
+        // setNbOfPts(e);
+        console.log(e);
+        console.log(nbOfPts)
+        updateRandomData()
     }
 
     const options = useMemo(() => {
@@ -50,6 +57,8 @@ const App = () => {
     const updateRandomData = () => {
 
         const points = [];
+
+        console.log(nbOfPts)
 
         for (let i = 0; i < nbOfPts; i++) {
             points.push({
@@ -129,8 +138,12 @@ const App = () => {
         >
 
             <div className='params'>
-                <Select name='Random function' onChange={onSelectChange} className='select' options={options} />
-                <Slider value={nbOfPts} name={'Number of points'} handleChange={setNbOfPts} />
+                <Setting name='Randomizer function' >
+                    <Select onChange={onSelectChange} className='select' options={options} />
+                </Setting>
+                <Setting name='Number of points' value={nbOfPts} >
+                    <Slider value={nbOfPts} handleChange={setNbOfPts} onvalidate={handleEndDrag} />
+                </Setting>
             </div>
             <div className='dragbar' onMouseDown={startDragV}></div>
             <div className='dragbar1' onMouseDown={startDragH}></div>

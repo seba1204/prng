@@ -4,12 +4,14 @@ import { defaultProps, propsTypes } from './Slider.props';
 
 import './Slider.css';
 
-const Slider = ({ name, handleChange, value }: propsTypes) => {
-
+const Slider = (props: propsTypes) => {
+    const { name, handleChange, value, onvalidate } = props
+    const handleEnd = onvalidate || defaultProps.onvalidate
     return (
         <div className='Silder'>
             {name && <div className='Slider-name'>{name + " :"}</div>}
             <RSlider
+                {...props}
                 axis="x"
                 x={value}
                 onChange={({ x }) => handleChange(x)}
@@ -22,9 +24,10 @@ const Slider = ({ name, handleChange, value }: propsTypes) => {
                         backgroundColor: "rgba(0, 0, 0, 0.438)",
                     },
                 }}
-                xstep={10}
-                xmin={100}
+                xstep={100}
+                xmin={1000}
                 xmax={100000}
+                onDragEnd={handleEnd}
             />
         </div>
     );
