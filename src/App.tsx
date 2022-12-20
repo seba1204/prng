@@ -3,16 +3,18 @@ import React, { useEffect, useMemo, useState } from 'react';
 import './App.css';
 import { Charts, Code, Select, Setting, Slider, WebGL } from "./components";
 import { Point } from "./lib/LULA/types";
+import { getParamsFromString } from './utils/parser';
 import { gaussian } from './utils/Prng';
 import Engine from './webgl/Engine';
 
-import functions from './constants';
+
+import functions, { Funcs } from './constants';
 
 const App = () => {
 
     const [points, setPoints] = useState<Point[]>([]);
     const [nbOfPts, setNbOfPts] = useState<number>(50000);
-    const [rndFunction, setRndFunction] = useState<string>(functions[0].content);
+    const [rndFunction, setRndFunction] = useState<Funcs>(functions[0]);
     const [engine, _] = useState<Engine>(new Engine());
     const [isDraggingH, setIsDraggingH] = useState<boolean>(false);
     const [isDraggingV, setIsDraggingV] = useState<boolean>(false);
@@ -23,14 +25,21 @@ const App = () => {
     const onSelectChange = (e: any) => {
         const { value } = e;
         const f = functions.filter(f => f.name === value)[0]
-        setRndFunction(f.content);
+        setRndFunction(f);
     }
     const handleEndSlider = () => {
         setUpdateData(true)
     }
 
     const handleCodeChange = (evn: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setRndFunction(evn.target.value)
+        setRndFunction(
+            (oldState) => {
+                return {
+                    ...oldState,
+                    content: evn.target.value
+                }
+            }
+        )
     }
 
     useEffect(() => {
@@ -122,6 +131,21 @@ const App = () => {
     }
 
 
+
+
+
+    const params = useMemo(() => {
+        const params = getParamsFromString(rndFunction.content);
+        return params.map((p, i) => {
+            return (
+                <div key={i}>
+                    <label>{p.name}</label>
+                    <input type={p.inputType} value={p.defaultValue || ""} />
+                </div>
+            )
+        })
+    }, [rndFunction])
+
     return (
         <div className='mainContainer'
             onMouseUp={endDrag}
@@ -140,11 +164,14 @@ const App = () => {
                 <Setting name='Number of points' value={nbOfPts} >
                     <Slider value={nbOfPts} onChange={setNbOfPts} onEnd={handleEndSlider} />
                 </Setting>
+                <Setting name={`Params of ${rndFunction.name} function`} >
+                    {params}
+                </Setting>
             </div>
             <div className='dragbar' onMouseDown={startDragV}></div>
             <div className='dragbar1' onMouseDown={startDragH}></div>
             <div className='code'>
-                <Code code={rndFunction} onChange={handleCodeChange} />
+                <Code code={rndFunction.content} onChange={handleCodeChange} />
             </div>
             <div className='webGL'>
                 <WebGL engine={engine} onClick={updateRandomData} />

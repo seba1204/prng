@@ -1,10 +1,15 @@
 import CodeEditor from '@uiw/react-textarea-code-editor';
-import React from "react";
+import React, { useEffect } from "react";
 import { defaultProps, propsTypes } from "./Code.props";
 
 // import "./Code.css";
 
 const Code = (props: propsTypes) => {
+
+    useEffect(() => {
+        // force set dark mode on @uiw/react-textarea-code-editor
+        document.documentElement.setAttribute('data-color-mode', 'dark');
+    }, [])
 
     return (
         <>
