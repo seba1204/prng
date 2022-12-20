@@ -5,8 +5,8 @@ import { defaultProps, propsTypes } from './Slider.props';
 import './Slider.css';
 
 const Slider = (props: propsTypes) => {
-    const { name, handleChange, value, onvalidate } = props
-    const handleEnd = onvalidate || defaultProps.onvalidate
+    const { name, onChange, value, onEnd } = props
+
     return (
         <div className='Silder'>
             {name && <div className='Slider-name'>{name + " :"}</div>}
@@ -14,7 +14,7 @@ const Slider = (props: propsTypes) => {
                 {...props}
                 axis="x"
                 x={value}
-                onChange={({ x }) => handleChange(x)}
+                onChange={({ x }) => onChange(x)}
                 styles={{
                     active: {
                         backgroundColor: '#18A084',
@@ -27,7 +27,7 @@ const Slider = (props: propsTypes) => {
                 xstep={100}
                 xmin={1000}
                 xmax={100000}
-                onDragEnd={handleEnd}
+                onDragEnd={onEnd}
             />
         </div>
     );

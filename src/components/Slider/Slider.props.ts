@@ -1,15 +1,15 @@
 import { ReactNode } from 'react';
 type propsTypes = {
     name?: ReactNode;
-    handleChange: (value: number) => void;
+    onChange: (value: number) => void;
+    onEnd?: () => void,
     value?: number;
-    onvalidate?: (e: MouseEvent) => void;
 } & typeof defaultProps;
 
 const defaultProps = {
     name: '',
     value: 0,
-    onvalidate: (e: MouseEvent) => { }
+    onEnd: () => { }
 }
 
 export { propsTypes, defaultProps };

@@ -18,26 +18,27 @@ const App = () => {
     const [isDraggingV, setIsDraggingV] = useState<boolean>(false);
     const [gridTemplateColumns, setGridTemplateColumns] = useState<string>('2fr 6px 1fr');
     const [gridTemplateRows, setGridTemplateRows] = useState<string>('min-content 2fr 6px 1fr');
-    const [updateData, setUpdatData] = useState<boolean>(false)
+    const [updateData, setUpdateData] = useState<boolean>(false)
 
     const onSelectChange = (e: any) => {
         const { value } = e;
         const f = functions.filter(f => f.name === value)[0]
-        console.log(`function name: ${f.name}`)
-        console.log(`function content: ${f.content}`)
         setRndFunction(f.content);
+    }
+    const handleEndSlider = () => {
+        setUpdateData(true)
     }
 
     const handleCodeChange = (evn: React.ChangeEvent<HTMLTextAreaElement>) => {
         setRndFunction(evn.target.value)
     }
 
-    const handleEndDrag = (e: MouseEvent) => {
-        // setNbOfPts(e);
-        console.log(e);
-        console.log(nbOfPts)
-        updateRandomData()
-    }
+    useEffect(() => {
+        if (updateData) {
+            setUpdateData(false)
+            updateRandomData()
+        }
+    }, [updateData, nbOfPts])
 
     const options = useMemo(() => {
         return functions.map(f => (
@@ -55,11 +56,7 @@ const App = () => {
 
 
     const updateRandomData = () => {
-
         const points = [];
-
-        console.log(nbOfPts)
-
         for (let i = 0; i < nbOfPts; i++) {
             points.push({
                 x: gaussian(0, 0.2),
@@ -120,7 +117,6 @@ const App = () => {
     const startDragH = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         setIsDraggingH(true);
     }
-
     const startDragV = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         setIsDraggingV(true);
     }
@@ -142,7 +138,7 @@ const App = () => {
                     <Select onChange={onSelectChange} className='select' options={options} />
                 </Setting>
                 <Setting name='Number of points' value={nbOfPts} >
-                    <Slider value={nbOfPts} handleChange={setNbOfPts} onvalidate={handleEndDrag} />
+                    <Slider value={nbOfPts} onChange={setNbOfPts} onEnd={handleEndSlider} />
                 </Setting>
             </div>
             <div className='dragbar' onMouseDown={startDragV}></div>

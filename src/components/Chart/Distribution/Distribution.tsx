@@ -23,7 +23,6 @@ const Distribution = (props: propsTypes) => {
     }
 
     const computeOptions = () => {
-
         const { data, min, max, title, numberOfBins } = props;
         const step = (max - min) / numberOfBins;
 
