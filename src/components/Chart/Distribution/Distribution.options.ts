@@ -8,6 +8,7 @@ const options = {
         }
     },
     xAxis: {
+        type: 'value',
         splitLine: {
             show: false
         },
@@ -20,6 +21,7 @@ const options = {
     },
 
     yAxis: {
+        type: 'value',
         splitLine: {
             show: false
         },
@@ -38,7 +40,7 @@ const options = {
                     show: false,
                 },
                 tooltip: {
-                    formatter: 'mean: 0.5',
+                    formatter: 'mean of range',
                 },
                 lineStyle: {
                     color: '#e74c3c',

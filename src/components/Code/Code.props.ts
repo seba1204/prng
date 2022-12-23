@@ -1,6 +1,7 @@
 type propsTypes = {
     code: string;
-    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
+    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void,
+    onValidate: () => void,
 
 } & typeof defaultProps;
 

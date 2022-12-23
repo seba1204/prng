@@ -1,5 +1,7 @@
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import React, { useEffect } from "react";
+import { Play } from 'react-feather';
+import { PictureButton } from '../PictureButton';
 import { defaultProps, propsTypes } from "./Code.props";
 
 // import "./Code.css";
@@ -26,6 +28,13 @@ const Code = (props: propsTypes) => {
                     fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
                 }}
             />
+            <PictureButton
+                className="button"
+                image={<Play />}
+                enabled={true}
+                onClick={props.onValidate}
+            />
+
         </>
     )
 }

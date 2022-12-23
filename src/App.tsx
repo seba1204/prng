@@ -4,16 +4,18 @@ import './App.css';
 import { Charts, Code, Select, Setting, Slider, WebGL } from "./components";
 import { Point } from "./lib/LULA/types";
 import { compile, execute } from './utils/Compiler';
-import { getParamsFromString } from './utils/parser';
+import { argument, getParamsFromString } from './utils/parser';
 import Engine from './webgl/Engine';
 
 
 import functions, { Funcs } from './constants';
+const MIN_CANVAS_SIZE = -500;
+const MAX_CANVAS_SIZE = 500;
 
 const App = () => {
 
     const [points, setPoints] = useState<Point[]>([]);
-    const [nbOfPts, setNbOfPts] = useState<number>(700);
+    const [nbOfPts, setNbOfPts] = useState<number>(5000);
     const [rndFunction, setRndFunction] = useState<Funcs>(functions[0]);
     const [engine, _] = useState<Engine>(new Engine());
     const [isDraggingH, setIsDraggingH] = useState<boolean>(false);
@@ -21,6 +23,8 @@ const App = () => {
     const [gridTemplateColumns, setGridTemplateColumns] = useState<string>('2fr 6px 1fr');
     const [gridTemplateRows, setGridTemplateRows] = useState<string>('min-content 2fr 6px 1fr');
     const [updateData, setUpdateData] = useState<boolean>(false)
+    const [param, setParam] = useState<argument[]>([])
+    const [compiledFunction, setCompiledFunction] = useState<Function>(() => { })
 
     const onSelectChange = (e: any) => {
         const { value } = e;
@@ -42,6 +46,17 @@ const App = () => {
         )
     }
 
+    const handleCodeRun = () => {
+        try {
+            const compiledCode = compile(rndFunction.content).outputText;
+            const F = execute(compiledCode);
+            setCompiledFunction(F)
+            setParam(getParamsFromString(rndFunction.content))
+        } catch (error) {
+            alert(error)
+        }
+    }
+
     useEffect(() => {
         if (updateData) {
             setUpdateData(false)
@@ -60,21 +75,17 @@ const App = () => {
 
     // useEffect to generate random data
     useEffect(() => {
+        handleCodeRun()
         updateRandomData();
     }, []);
 
 
     const updateRandomData = () => {
-        const points = [];
-        const compiledCode = compile(rndFunction.content).outputText;
-        const F = execute(compiledCode);
-        console.log('computing...')
         for (let i = 0; i < nbOfPts; i++) {
             points.push({
-                x: F(0, 0.2),
-                y: F(0, 0.2)
+                x: compiledFunction(...param.map(p => p.value)),
+                y: compiledFunction(...param.map(p => p.value)),
             });
-
         }
 
         engine.updatePoints(points)
@@ -134,20 +145,46 @@ const App = () => {
     }
 
 
+    useEffect(() => {
+        updateRandomData();
+    }, [rndFunction, param])
+
+    const handleParamInputChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+        const { value } = e.target;
+        const newParam = [...param];
+        const inputType = newParam[index].inputType;
+
+        if (inputType === 'number') {
+            newParam[index].value = parseFloat(value);
+        } else if (inputType === 'checkbox') {
+            newParam[index].value = e.target.checked;
+        } else {
+            newParam[index].value = value;
+        }
+
+        setParam(newParam);
+    }
+    // 
+    useEffect(() => {
+        setParam(getParamsFromString(rndFunction.content));
+    }, [rndFunction])
 
 
 
-    const params = useMemo(() => {
-        const params = getParamsFromString(rndFunction.content);
-        return params.map((p, i) => {
+    const Params = useMemo(() => {
+        return param.map((p, i) => {
             return (
                 <div key={i}>
                     <label>{p.name}</label>
-                    <input type={p.inputType} value={p.defaultValue || ""} />
+                    {/* if inputType is checkbox */}
+                    {p.inputType === 'checkbox' ?
+                        <input type={p.inputType} checked={p.value as boolean} onChange={e => handleParamInputChange(e, i)} /> :
+                        <input type={p.inputType} value={p.value as number | string} onChange={e => handleParamInputChange(e, i)} />
+                    }
                 </div>
             )
         })
-    }, [rndFunction])
+    }, [rndFunction, param])
 
     return (
         <div className='mainContainer'
@@ -168,21 +205,21 @@ const App = () => {
                     <Slider value={nbOfPts} onChange={setNbOfPts} onEnd={handleEndSlider} />
                 </Setting>
                 <Setting name={`Params of ${rndFunction.name} function`} >
-                    {params}
+                    {Params}
                 </Setting>
             </div>
             <div className='dragbar' onMouseDown={startDragV}></div>
             <div className='dragbar1' onMouseDown={startDragH}></div>
             <div className='code'>
-                <Code code={rndFunction.content} onChange={handleCodeChange} />
+                <Code code={rndFunction.content} onChange={handleCodeChange} onValidate={handleCodeRun} />
             </div>
             <div className='webGL'>
                 <WebGL engine={engine} onClick={updateRandomData} />
             </div>
             <div className='graphs'>
-                <Charts.Distribution data={points.map(p => p.x)} title='x distribution' />
-                <Charts.Distribution data={points.map(p => p.y)} title='y distribution' />
-                <Charts.Distribution data={points.map(p => p.y)} title='z distribution' />
+                <Charts.Distribution data={points.map(p => p.x)} title='x distribution' min={MIN_CANVAS_SIZE} max={MAX_CANVAS_SIZE} />
+                <Charts.Distribution data={points.map(p => p.y)} title='y distribution' min={MIN_CANVAS_SIZE} max={MAX_CANVAS_SIZE} />
+                <Charts.Distribution data={points.map(p => p.y)} title='z distribution' min={MIN_CANVAS_SIZE} max={MAX_CANVAS_SIZE} />
             </div>
         </div>
     );

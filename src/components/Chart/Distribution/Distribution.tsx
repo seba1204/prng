@@ -8,7 +8,8 @@ import { defaultProps, propsTypes } from "./Distribution.props";
 
 const Distribution = (props: propsTypes) => {
 
-    const computeHistogram = (data: number[]): number[] => {
+    const computeHistogram = (data: number[]): number[][] => {
+
         const { min, max, numberOfBins } = props;
 
         const step = (max - min) / numberOfBins;
@@ -19,7 +20,8 @@ const Distribution = (props: propsTypes) => {
             const bin = Math.floor((data[i] - min) / step);
             bins[bin]++;
         }
-        return bins;
+
+        return bins.map((y, i) => [i * step + min, y]);
     }
 
     const computeOptions = () => {
@@ -27,7 +29,9 @@ const Distribution = (props: propsTypes) => {
         const step = (max - min) / numberOfBins;
 
         const bins = computeHistogram(data);
+        console.log(`binssize: ${bins.length}`)
 
+        const yMaxi = Math.max(...bins.map((bin) => bin[1]));
         return {
             ...options,
             title: {
@@ -36,15 +40,20 @@ const Distribution = (props: propsTypes) => {
             },
             visualMap: {
                 ...options.visualMap,
-                max: Math.max(...bins),
-            },
-            xAxis: {
-                ...options.xAxis,
-                data: bins.map((_, i) => (min + i * step).toFixed(2)),
+                max: yMaxi,
             },
             series: [{
                 ...options.series,
                 data: bins,
+                // update xAxis od markline 
+                markLine: {
+                    ...options.series.markLine,
+                    data: [{
+                        ...options.series.markLine.data[0],
+                        // set xAxis to the max value of the data
+                        xAxis: (max + min) / 2,
+                    }]
+                }
             }]
         }
     }

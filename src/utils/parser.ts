@@ -2,7 +2,8 @@ type argument = {
     name: string,
     type: string,
     inputType: string,
-    defaultValue: string | null
+    defaultValue?: string | number | boolean,
+    value: string | number | boolean
 }
 
 const getParamsFromString = (func: string): argument[] => {
@@ -53,7 +54,7 @@ const getParamsFromString = (func: string): argument[] => {
             paramDefaultValue = name[1];
         } else {
             paramName = name[0];
-            paramDefaultValue = null;
+            paramDefaultValue = undefined;
         }
 
         // now the parameter should look like this:
@@ -73,12 +74,30 @@ const getParamsFromString = (func: string): argument[] => {
         paramType = paramType.trim();
         paramDefaultValue = paramDefaultValue && paramDefaultValue.trim();
 
+        // set a value if default value is not set
+        if (paramDefaultValue === undefined) {
+            switch (paramType) {
+                case 'number':
+                    paramDefaultValue = 0;
+                    break;
+                case 'string':
+                    paramDefaultValue = '';
+                    break;
+                case 'boolean':
+                    paramDefaultValue = false;
+                    break;
+                default:
+                    paramDefaultValue = '';
+            }
+        }
+
 
         return ({
             name: paramName,
             type: paramType,
             inputType: getInputType(paramType),
-            defaultValue: paramDefaultValue
+            defaultValue: paramDefaultValue,
+            value: paramDefaultValue
         });
     });
 }
