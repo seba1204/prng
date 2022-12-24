@@ -1,3 +1,4 @@
 import Engine from './LULA';
+import * as SUI from './SUI';
 
-export default Engine;
+export { Engine, SUI };

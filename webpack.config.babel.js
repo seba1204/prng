@@ -64,6 +64,12 @@ export const module = {
             test: /\.txt$/,
             use: 'raw-loader'
         },
+        // load json files
+        {
+            test: /\.json$/,
+            type: 'javascript/auto',
+            use: 'json-loader'
+        },
     ],
     noParse: [require.resolve('typescript/lib/typescript.js')],
 };

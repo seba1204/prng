@@ -1,0 +1,19 @@
+.root {
+    background-color: red;
+}
+
+.WEBGL {
+    background-color: blue;
+}
+
+.GRAPHS {
+    background-color: green;
+}
+
+.PARAMS {
+    background-color: yellow;
+}
+
+.CODE {
+    background-color: purple;
+}

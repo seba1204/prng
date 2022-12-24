@@ -1,3 +1,0 @@
-function (min: number = -400, max: number = 400): number{
-  return Math.random() * (max - min) + min;
-}

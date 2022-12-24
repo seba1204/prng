@@ -11,6 +11,8 @@
         "strict": true,
         "sourceMap": true,
         "target": "esnext",
+        // load json files
+        "resolveJsonModule": true,
     },
     "exclude": [
         "node_modules"
