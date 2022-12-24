@@ -1,5 +1,5 @@
 <!-- omit in toc -->
-# PRNG [![aau](assets/aau_badge.png)](https://www.aau.at/) [![wakatime](https://wakatime.com/badge/user/1d3bd607-d69f-4b8a-8664-7aaa31576f0b/project/9a2b56a3-6b55-47b1-aec6-581f30fa0d37.svg)](https://wakatime.com/badge/user/1d3bd607-d69f-4b8a-8664-7aaa31576f0b/project/9a2b56a3-6b55-47b1-aec6-581f30fa0d37)
+# PRNG [![aau](assets/aau_badge.png)](https://www.aau.at/) ![wakatime](https://wakatime.com/badge/user/1d3bd607-d69f-4b8a-8664-7aaa31576f0b/project/9a2b56a3-6b55-47b1-aec6-581f30fa0d37.svg)
 
 - 🎲 [LIVE DEMO](https://aau.spont.me/graphics/prng/)
 - 📝 [PDF REPORT](https://aau.spont.me/graphics/prng/report.pdf)
