@@ -1,6 +1,6 @@
 import React from 'react';
-import { Item, Pane } from '../lib/SUI';
-import ids from './itemNames.json';
+import { Item, Pane } from '../../lib/SUI';
+import ids from '../itemNames.json';
 
 const mobile = () => {
     return (

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import './App.css';
+import { Code } from './components';
 import { desktop, mobile } from './layout';
 import ids from './layout/itemNames.json';
 import { Layout, VirtualItem } from './lib/SUI';
@@ -15,7 +16,7 @@ const App = () => {
             </VirtualItem>
 
             <VirtualItem id={ids.GRAPHS}>
-                <h1>Params</h1>
+                <h1>Graphs</h1>
             </VirtualItem>
 
             <VirtualItem id={ids.BUILTIN_PARAMS}>
@@ -27,7 +28,7 @@ const App = () => {
             </VirtualItem>
 
             <VirtualItem id={ids.CODE}>
-                <h1>Code</h1>
+                <Code code={'coucoucocu'} onChange={() => { }} />
             </VirtualItem>
         </Layout>
     )

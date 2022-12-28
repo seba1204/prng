@@ -3,8 +3,10 @@ import "./DragBar.css";
 import { defaultProps, propsTypes } from "./DragBar.props";
 
 const DragBar = (props: propsTypes) => {
+    let className = `dragbar ${props.direction}`;
+    props.className && (className += ` ${props.className}`);
     return (
-        <div className={`dragbar ${props.className}`}>
+        <div {...props} className={className} >
         </div>
     );
 };

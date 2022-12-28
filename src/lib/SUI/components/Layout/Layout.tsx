@@ -1,61 +1,30 @@
-import React, { ReactElement } from "react";
+import React, { useMemo } from "react";
+import { useMediaQuery } from 'react-responsive';
 import "./Layout.css";
 import { defaultProps, propsTypes } from "./Layout.props";
+import { displayLayout, getVirtualItems } from "./Layout.utils";
+
+
 
 const Layout = (props: propsTypes) => {
     const { desktopLayout, mobileLayout, children } = props;
-    const actualItems = (children ? (Array.isArray(children) ? children : [children]) : []).filter(
-        (child: ReactElement) => getChildType(child).toLowerCase() === 'virtualitem'
-    );
 
-    const getChildType = (child: ReactElement) => {
-        let childType = child.type;
-        if (typeof childType === 'string')
-            childType = childType.toLowerCase()
-        else
-            childType = childType.name.toLowerCase()
-        return childType;
-    }
+    const isDesktopOrLaptop = useMediaQuery({ query: '(min-width: 768px)' })
 
-    const displayLayout = (layout: ReactElement,) => {
-
-        let layoutChildren = layout.props.children;
-
-        if (!layoutChildren)
-            return null;
-        if (!Array.isArray(layoutChildren))
-            layoutChildren = [layoutChildren] as ReactElement[];
-
-        const newChildren = layoutChildren.map((child: ReactElement) => {
-            const childType = getChildType(child);
-
-            if (childType === 'item') {
-                // find the item in the layout
-                // and display the right child instead of the item
-
-                const actualChild = children.filter((c: ReactElement) => c.props.id === child.props.id)[0];
-                // copy props from item to actual child
-                return React.cloneElement(actualChild, { ...child.props, children: actualChild.props.children });
+    const currentLayout = useMemo(() => {
+        return isDesktopOrLaptop ? desktopLayout : mobileLayout;
+    }, [isDesktopOrLaptop, desktopLayout, mobileLayout]);
 
 
-            } else {
-                // if child as children, call displayLayout on them
-                if (child.props.children)
-                    return React.cloneElement(child, { children: displayLayout(child) });
-                else
-                    return child;
-            }
 
-        });
+    const virtualItemList = useMemo(() => {
+        return getVirtualItems(children)
+    }, [children]);
 
-
-        return (<>{newChildren}</>)
-    };
 
     return (
-        <div className="layout">
-            {displayLayout(desktopLayout)}
-        </div>
+        <>{
+            React.cloneElement(currentLayout, { children: displayLayout(currentLayout, virtualItemList) })}</>
     );
 };
 

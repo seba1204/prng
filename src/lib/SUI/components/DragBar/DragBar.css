@@ -1,0 +1,11 @@
+.dragbar {
+    background-color: rgba(0, 0, 0, 0.438);
+}
+
+.dragbar.vertical {
+    cursor: col-resize;
+}
+
+.dragbar.horizontal {
+    cursor: row-resize;
+}
