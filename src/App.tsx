@@ -6,6 +6,8 @@ import { desktop, mobile } from './layout';
 import ids from './layout/itemNames.json';
 import { Layout, VirtualItem } from './lib/SUI';
 
+import functions from './constants';
+
 const App = () => {
 
 
@@ -28,7 +30,7 @@ const App = () => {
             </VirtualItem>
 
             <VirtualItem id={ids.CODE}>
-                <Code code={'coucoucocu'} onChange={() => { }} />
+                <Code code={functions[0].content} onChange={() => { }} />
             </VirtualItem>
         </Layout>
     )

@@ -3,6 +3,15 @@
     height: 100vh;
     grid-template-areas:
         'left vertical-dragbar right';
+    max-height: 100vh;
+}
+
+.root>div {
+    overflow: hidden;
+}
+
+.root>div>div {
+    overflow: auto;
 }
 
 .root>.dragbar {
