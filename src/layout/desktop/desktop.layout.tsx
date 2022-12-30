@@ -66,7 +66,7 @@ const desktop = () => {
     }
 
     return (
-        <div className='root' onMouseUp={endDrag} onMouseMove={onDrag} style={{ gridTemplateColumns: gridTemplates.centerVertical }}>
+        <div className='desktop__root' onMouseUp={endDrag} onMouseMove={onDrag} style={{ gridTemplateColumns: gridTemplates.centerVertical }}>
 
             <div className="leftPanel" onMouseUp={endDrag} style={{ gridTemplateRows: gridTemplates.leftHorizontal }}>
                 <div className="PARAMS">

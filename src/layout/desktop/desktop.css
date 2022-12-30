@@ -1,4 +1,4 @@
-.root {
+.desktop__root {
     display: grid;
     height: 100vh;
     grid-template-areas:
@@ -6,27 +6,27 @@
     max-height: 100vh;
 }
 
-.root>div {
+.desktop__root>div {
     overflow: hidden;
 }
 
-.root>div>div {
+.desktop__root>div>div {
     overflow: auto;
 }
 
-.root>.dragbar {
+.desktop__root>.dragbar {
     grid-area: vertical-dragbar;
 }
 
-.root>.leftPanel {
+.desktop__root>.leftPanel {
     grid-area: left;
 }
 
-.root>.rightPanel {
+.desktop__root>.rightPanel {
     grid-area: right;
 }
 
-.root>.leftPanel {
+.desktop__root>.leftPanel {
     display: grid;
     grid-template-areas:
         'params'
@@ -34,19 +34,19 @@
         'code';
 }
 
-.root>.leftPanel>.dragbar {
+.desktop__root>.leftPanel>.dragbar {
     grid-area: horizontal-dragbar;
 }
 
-.root>.leftPanel>.PARAMS {
+.desktop__root>.leftPanel>.PARAMS {
     grid-area: params;
 }
 
-.root>.leftPanel>.CODE {
+.desktop__root>.leftPanel>.CODE {
     grid-area: code;
 }
 
-.root>.rightPanel {
+.desktop__root>.rightPanel {
     display: grid;
     grid-template-areas:
         'webgl'
@@ -54,14 +54,14 @@
         'output';
 }
 
-.root>.rightPanel>.dragbar {
+.desktop__root>.rightPanel>.dragbar {
     grid-area: dragbar;
 }
 
-.root>.rightPanel>.WEBGL {
+.desktop__root>.rightPanel>.WEBGL {
     grid-area: webgl;
 }
 
-.root>.rightPanel>.GRAPHS {
+.desktop__root>.rightPanel>.GRAPHS {
     grid-area: output;
 }

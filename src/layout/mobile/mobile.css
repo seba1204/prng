@@ -1,26 +1,25 @@
-.root {
+.mobile__root {
     display: flex;
     flex-direction: column;
     height: 100%;
     width: 100%;
 }
 
-.root>.WEBGL {
+.mobile__root>.WEBGL {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    transition: 0.2s;
+    transition: 0.3s;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
 /* scrolable is below WEBGL. WEBGL is fixed, and 
 stay over the scollable content */
 
-.root>.scrolable {
+.mobile__root>.scrolable {
     flex: 1 1 auto;
     overflow-y: auto;
     min-height: 0px;
-    transition: 0.2s;
-    -webkit-overflow-scrolling: touch;
-    touch-action: none;
+    transition: 0.3s;
 }

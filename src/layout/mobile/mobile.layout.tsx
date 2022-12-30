@@ -6,23 +6,24 @@ import './mobile.css';
 
 const mobile = () => {
 
-    const [height, setHeight] = React.useState(200);
+    const [height, setHeight] = React.useState(300);
 
     const handleScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
         const target = e.target as HTMLDivElement;
         if (target.scrollTop > 50) {
             setHeight(100);
         } else {
-            setHeight(200);
+            setHeight(300);
         }
     }
 
+
     return (
-        <div className='root'>
+        <div className='mobile__root'>
             <div className='WEBGL' style={{ height: `${height}px` }}>
                 <Item id={ids.WEBGL} />
             </div>
-            <div className='scrolable' style={{ marginTop: `200px` }} onScroll={handleScroll} >
+            <div className='scrolable' style={{ marginTop: `${height}px` }} onScroll={handleScroll} >
                 <Foldable title={"Parameters"} >
                     <Item id={ids.BUILTIN_PARAMS} />
                     <Item id={ids.OTHER_PARAMS} />
