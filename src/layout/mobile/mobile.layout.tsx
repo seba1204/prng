@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Item } from '../../lib/SUI';
 import Foldable from '../../lib/SUI/components/Foldable';
 import ids from '../itemNames.json';
@@ -8,14 +8,20 @@ const mobile = () => {
 
     const [height, setHeight] = React.useState(300);
 
-    const handleScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
-        const target = e.target as HTMLDivElement;
-        if (target.scrollTop > 50) {
+    const handleScroll = (e: any) => {
+        console.log(e)
+        const top = e.target.scrollingElement.scrollTop;
+        if (top > 50) {
             setHeight(100);
         } else {
             setHeight(300);
         }
     }
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+    }, [])
+
 
 
     return (
@@ -23,7 +29,7 @@ const mobile = () => {
             <div className='WEBGL' style={{ height: `${height}px` }}>
                 <Item id={ids.WEBGL} />
             </div>
-            <div className='scrolable' style={{ marginTop: `${height}px` }} onScroll={handleScroll} >
+            <div className='scrolable' style={{ marginTop: `${height}px` }} >
                 <Foldable title={"Parameters"} >
                     <Item id={ids.BUILTIN_PARAMS} />
                     <Item id={ids.OTHER_PARAMS} />
