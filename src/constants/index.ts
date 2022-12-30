@@ -24,10 +24,18 @@ export type Color = {
 
 export type ParamValue = string | number | boolean | Color;
 
+export type Point = {
+    x: ParamValue,
+    y: ParamValue,
+    z?: ParamValue,
+}
+
+export type UserInput = Point | ParamValue;
+
 export type Param = {
     name: string,
     type: string,
-    value: ParamValue
+    value: UserInput
 }
 
 export type Funcs = {
