@@ -9,7 +9,6 @@ const mobile = () => {
     const [height, setHeight] = React.useState(300);
 
     const handleScroll = (e: any) => {
-        console.log(e)
         const top = e.target.scrollingElement.scrollTop;
         if (top > 50) {
             setHeight(100);
