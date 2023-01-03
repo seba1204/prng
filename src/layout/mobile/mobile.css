@@ -13,6 +13,7 @@
     transition: 0.3s;
     background-color: #161B22;
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+    z-index: 99;
 }
 
 /* scrolable is below WEBGL. WEBGL is fixed, and 
