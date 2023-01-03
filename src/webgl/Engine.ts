@@ -1,4 +1,4 @@
-import LulaEngine from '../lib';
+import { Engine as LulaEngine } from '../lib';
 import { Point } from '../lib/LULA/types';
 
 import fragShader from './shaders/fragmentShader.glsl';

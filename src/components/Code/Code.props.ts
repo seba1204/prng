@@ -1,5 +1,6 @@
 type propsTypes = {
-    textFile: string;
+    code: string;
+    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
 
 } & typeof defaultProps;
 

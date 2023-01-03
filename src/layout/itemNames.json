@@ -1,0 +1,7 @@
+{
+    "WEBGL": "webgl",
+    "GRAPHS": "graphs",
+    "BUILTIN_PARAMS": "builtin_params",
+    "OTHER_PARAMS": "other_params",
+    "CODE": "code"
+}

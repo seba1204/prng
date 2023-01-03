@@ -1,50 +1,34 @@
 import CodeEditor from '@uiw/react-textarea-code-editor';
-import React from "react";
-import { Compiler } from '../../utils';
-import { propsTypes } from "./Code.props";
+import React, { useEffect } from "react";
+import { defaultProps, propsTypes } from "./Code.props";
 
 // import "./Code.css";
 
 const Code = (props: propsTypes) => {
-    const { textFile } = props;
 
-    // useEffect(() => {
-    //     document.documentElement.setAttribute('data-color-mode', 'dark')
-    // }, [])
-
-    const [code, setCode] = React.useState(textFile);
-
-    const runCode = () => {
-        const transpiledOutput = Compiler(code);
-        console.log(transpiledOutput.diagnostics);
-        if (transpiledOutput.diagnostics) {
-            if (transpiledOutput.diagnostics.length > 0) {
-                console.log("Error");
-            }
-            // else {
-            //     eval(transpiledOutput.outputText);
-            // }
-        }
-    }
+    useEffect(() => {
+        // force set dark mode on @uiw/react-textarea-code-editor
+        document.documentElement.setAttribute('data-color-mode', 'dark');
+    }, [])
 
     return (
-        <div className="code">
+        <>
 
             <CodeEditor
-                value={code}
+                {...props}
+                value={props.code}
                 language="ts"
-                placeholder="Please enter  code."
+                placeholder="Please enter TS code."
                 padding={15}
                 style={{
                     fontSize: 12,
                     // backgroundColor: "transparent",
                     fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
                 }}
-                onChange={(evn) => setCode(evn.target.value)}
             />
-            <button onClick={runCode}>Run</button>
-        </div>
+        </>
     )
 }
+Code.defaultProps = defaultProps;
 
 export default Code;

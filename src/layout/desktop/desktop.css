@@ -1,0 +1,67 @@
+.desktop__root {
+    display: grid;
+    height: 100vh;
+    grid-template-areas:
+        'left vertical-dragbar right';
+    max-height: 100vh;
+}
+
+.desktop__root>div {
+    overflow: hidden;
+}
+
+.desktop__root>div>div {
+    overflow: auto;
+}
+
+.desktop__root>.dragbar {
+    grid-area: vertical-dragbar;
+}
+
+.desktop__root>.leftPanel {
+    grid-area: left;
+}
+
+.desktop__root>.rightPanel {
+    grid-area: right;
+}
+
+.desktop__root>.leftPanel {
+    display: grid;
+    grid-template-areas:
+        'params'
+        'horizontal-dragbar'
+        'code';
+}
+
+.desktop__root>.leftPanel>.dragbar {
+    grid-area: horizontal-dragbar;
+}
+
+.desktop__root>.leftPanel>.PARAMS {
+    grid-area: params;
+}
+
+.desktop__root>.leftPanel>.CODE {
+    grid-area: code;
+}
+
+.desktop__root>.rightPanel {
+    display: grid;
+    grid-template-areas:
+        'webgl'
+        'dragbar'
+        'output';
+}
+
+.desktop__root>.rightPanel>.dragbar {
+    grid-area: dragbar;
+}
+
+.desktop__root>.rightPanel>.WEBGL {
+    grid-area: webgl;
+}
+
+.desktop__root>.rightPanel>.GRAPHS {
+    grid-area: output;
+}
