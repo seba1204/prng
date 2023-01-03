@@ -1,4 +1,4 @@
-import { Point } from "../lib/LULA/types";
+import { Point } from "../constants/types";
 
 // generate a random gaussian 2d distribution arround a point
 // as it is dart shots around a target

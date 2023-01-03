@@ -1,5 +1,5 @@
+import { Point } from '../constants/types';
 import { Engine as LulaEngine } from '../lib';
-import { Point } from '../lib/LULA/types';
 
 import fragShader from './shaders/fragmentShader.glsl';
 import vertShader from "./shaders/vertexShader.glsl";

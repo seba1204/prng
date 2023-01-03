@@ -1,19 +1,25 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import './App.css';
-import { Code } from './components';
+import { Code, FnParams } from './components';
 import { desktop, mobile } from './layout';
 import ids from './layout/itemNames.json';
 import { Layout, VirtualItem } from './lib/SUI';
 
+import BiParams from './components/BiParams';
 import Canvas from './components/WebGL/Canvas';
 import functions from './constants';
-import { Point } from "./lib/LULA/types";
+import { Func, Point } from './constants/types';
 import { gaussian } from './utils/Prng';
 import Engine from './webgl';
 
 const App = () => {
     const [points, setPoints] = useState<Point[]>([]);
+    const [nbOfPoints, setNbOfPoints] = useState(0);
+    const [is3D, setIs3D] = useState(false);
+    const [currentFnId, setCurrentFnId] = useState(0);
+    const [needToCompile, setNeedToCompile] = useState(false);
+    const [fnList, setFnList] = useState<Func[]>(functions);
     const engine = useMemo(() => { return new Engine() }, []);
 
     const updateRandomData = () => {
@@ -35,6 +41,7 @@ const App = () => {
         updateRandomData()
     }, [])
 
+
     return (
         <Layout desktopLayout={desktop()} mobileLayout={mobile()}>
             <VirtualItem id={ids.WEBGL} >
@@ -46,11 +53,11 @@ const App = () => {
             </VirtualItem>
 
             <VirtualItem id={ids.BUILTIN_PARAMS}>
-                <h1>Coucou</h1>
+                <BiParams fnList={fnList} nbOfPoints={nbOfPoints} is3D={is3D} currentFnId={currentFnId} />
             </VirtualItem>
 
             <VirtualItem id={ids.OTHER_PARAMS}>
-                <h1>Params</h1>
+                <FnParams params={fnList[currentFnId].params} />
             </VirtualItem>
 
             <VirtualItem id={ids.CODE}>

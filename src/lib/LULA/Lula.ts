@@ -1,5 +1,6 @@
+import { Point } from '../../constants/types';
 import Attribute from './Attribute';
-import { Attributes, color, Line, Point, Primitive, shaderType, Triangle } from './types';
+import { Attributes, color, Line, Primitive, shaderType, Triangle } from './types';
 
 /**
  * Lula is a WebGL wrapper.

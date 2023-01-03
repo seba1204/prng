@@ -1,46 +1,42 @@
 import gaussian from './gaussian.txt';
+import { Func } from './types';
 import uniforms from './uniforms.txt';
 
-export default [
+const fn: Func[] = [
     {
         name: 'gaussian',
-        label: 'Gaussian',
-        content: gaussian,
+        content: gaussian as string,
+        params: [
+            {
+                name: 'mean',
+                type: 'Point',
+                value: { x: 0, y: 0 },
+            },
+            {
+                name: 'stdDev',
+                type: 'Point',
+                value: { x: 0.2, y: 0.2 },
+            }
+        ],
+        compiledFunc: () => { },
     },
     {
         name: 'uniforms',
-        label: 'Uniforms',
-        content: uniforms,
+        content: uniforms as string,
+        params: [
+            {
+                name: 'min',
+                type: 'number',
+                value: -1,
+            },
+            {
+                name: 'max',
+                type: 'number',
+                value: 1,
+            }
+        ],
+        compiledFunc: () => { },
     },
 ];
 
-export type Color = {
-    r: number,
-    g: number,
-    b: number,
-    a?: number,
-}
-
-
-export type ParamValue = string | number | boolean | Color;
-
-export type Point = {
-    x: ParamValue,
-    y: ParamValue,
-    z?: ParamValue,
-}
-
-export type UserInput = Point | ParamValue;
-
-export type Param = {
-    name: string,
-    type: string,
-    value: UserInput
-}
-
-export type Funcs = {
-    name: string,
-    content: string,
-    params: Param[],
-    compiledFunc: Function,
-}
+export default fn;
