@@ -51,20 +51,6 @@ const App = () => {
 
             <VirtualItem id={ids.OTHER_PARAMS}>
                 <h1>Params</h1>
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
             </VirtualItem>
 
             <VirtualItem id={ids.CODE}>
