@@ -14,8 +14,18 @@ const fn: Func[] = [
             },
             {
                 name: 'stdDev',
-                type: 'Point',
-                value: { x: 0.2, y: 0.2 },
+                type: 'number',
+                value: 0.2,
+            },
+            {
+                name: 'color',
+                type: 'Color',
+                value: { r: 255, g: 0, b: 0 },
+            },
+            {
+                name: '3D',
+                type: 'boolean',
+                value: false,
             }
         ],
         compiledFunc: () => { },

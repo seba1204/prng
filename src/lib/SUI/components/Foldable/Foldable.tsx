@@ -5,7 +5,7 @@ import { defaultProps, propsTypes } from "./Foldable.props";
 
 const Foldable = (props: propsTypes) => {
 
-    const [isFolded, setIsFolded] = React.useState(false);
+    const [isFolded, setIsFolded] = React.useState(true);
 
     let className = 'foldable';
     props.className && (className += ` ${props.className}`);

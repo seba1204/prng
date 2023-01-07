@@ -22,8 +22,9 @@ const Code = (props: propsTypes) => {
                 padding={15}
                 style={{
                     fontSize: 12,
-                    // backgroundColor: "transparent",
                     fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+                    height: '100%',
+                    overflow: 'auto'
                 }}
             />
         </>

@@ -15,8 +15,9 @@ import Engine from './webgl';
 
 const App = () => {
     const [points, setPoints] = useState<Point[]>([]);
-    const [nbOfPoints, setNbOfPoints] = useState(0);
+    const [nbOfPoints, setNbOfPoints] = useState(5000);
     const [is3D, setIs3D] = useState(false);
+    const [color, setColor] = useState("#16a085");
     const [currentFnId, setCurrentFnId] = useState(0);
     const [needToCompile, setNeedToCompile] = useState(false);
     const [fnList, setFnList] = useState<Func[]>(functions);
@@ -25,7 +26,7 @@ const App = () => {
     const updateRandomData = () => {
         const points = [];
         // create 1000 random points
-        for (let i = 0; i < 5000; i++) {
+        for (let i = 0; i < nbOfPoints; i++) {
             points.push({
                 x: gaussian(0, 0.2),
                 y: gaussian(0, 0.2)
@@ -39,7 +40,16 @@ const App = () => {
 
     useEffect(() => {
         updateRandomData()
-    }, [])
+    }, [nbOfPoints])
+
+    const onColorChange = (color: string) => {
+        setColor(color);
+        // engine.updateColor(color)
+    }
+
+    const onNbOfPointsChange = (nbOfPoints: number) => {
+        setNbOfPoints(nbOfPoints);
+    }
 
 
     return (
@@ -53,15 +63,32 @@ const App = () => {
             </VirtualItem>
 
             <VirtualItem id={ids.BUILTIN_PARAMS}>
-                <BiParams fnList={fnList} nbOfPoints={nbOfPoints} is3D={is3D} currentFnId={currentFnId} />
+                <BiParams
+                    fnList={fnList}
+                    nbOfPoints={nbOfPoints}
+                    is3D={is3D}
+                    currentFnId={currentFnId}
+                    color={color}
+                    on3DToggle={setIs3D}
+                    onColorChange={onColorChange}
+                    onNbOfPointsChange={onNbOfPointsChange}
+                    onFnChange={(fn) => {
+                        const index = fnList.findIndex(f => f.name === fn.name);
+                        setCurrentFnId(index);
+                        setNeedToCompile(true);
+                    }}
+                />
             </VirtualItem>
 
             <VirtualItem id={ids.OTHER_PARAMS}>
-                <FnParams params={fnList[currentFnId].params} />
+                <FnParams
+                    params={fnList[currentFnId].params}
+                    is3D={is3D}
+                />
             </VirtualItem>
 
             <VirtualItem id={ids.CODE}>
-                <Code code={functions[0].content} onChange={() => { }} />
+                <Code code={functions[currentFnId].content} onChange={() => { }} />
             </VirtualItem>
         </Layout>
     )
