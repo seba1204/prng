@@ -13,7 +13,13 @@ const fn: Func[] = [
                 value: { x: 0, y: 0 },
             },
             {
-                name: 'stdDev',
+                name: 'veryveryveryveryveryverylongname',
+                type: 'number',
+                value: 0.2,
+            },
+
+            {
+                name: 'shortName',
                 type: 'number',
                 value: 0.2,
             },

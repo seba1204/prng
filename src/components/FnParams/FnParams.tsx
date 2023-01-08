@@ -9,16 +9,31 @@ const FnParams = (props: propsTypes) => {
 
     const { params } = props;
 
+    const displayNumber = (param: any) => {
+        // return a label with a tooltip and a number input
+        return (
+            <div className="data">
+                <label>{param.name}: </label>
+                <input type="number" />
+            </div>
+
+        );
+    };
+
     const displayParams = () => {
         return params.map((param, index) => {
-            const label = shorten(param.name)
+            const { name, shortened } = shorten(param.name)
             // TODO: add a tooltip if label is shortened
             switch (param.type) {
                 case "number" || "string":
                     return (
                         <div key={index} className={param.type}>
                             <div className="data">
-                                <label>{label}: </label>
+                                <label className="tooltip">{name}:
+                                    {shortened &&
+                                        <span className="tooltiptext">{param.name}</span>
+                                    }
+                                </label>
                                 <input type={param.type} />
                             </div>
                         </div>
@@ -27,7 +42,7 @@ const FnParams = (props: propsTypes) => {
                     return (
                         <div key={index} className={param.type}>
                             <div className="data">
-                                <label>{label}</label>
+                                <label>{name}</label>
                                 <input type="checkbox" />
                             </div>
                         </div>
@@ -35,7 +50,7 @@ const FnParams = (props: propsTypes) => {
                 case "Point":
                     return (
                         <div key={index} className={param.type}>
-                            <label>{label}: </label>
+                            <label>{name}: </label>
                             <div className="data">
                                 <div className="pointValue">
                                     <label>x: </label>
@@ -57,7 +72,7 @@ const FnParams = (props: propsTypes) => {
                 case "Color":
                     return (
                         <div key={index} className={param.type}>
-                            <label>{label}</label>
+                            <label>{name}</label>
                             <input type="color" />
                         </div>
                     );
