@@ -13,25 +13,9 @@ const fn: Func[] = [
                 value: { x: 0, y: 0 },
             },
             {
-                name: 'veryveryveryveryveryverylongname',
-                type: 'number',
-                value: 0.2,
-            },
-
-            {
-                name: 'shortName',
-                type: 'number',
-                value: 0.2,
-            },
-            {
-                name: 'color',
-                type: 'Color',
-                value: { r: 255, g: 0, b: 0 },
-            },
-            {
-                name: '3D',
-                type: 'boolean',
-                value: false,
+                name: 'stDev',
+                type: 'Point',
+                value: { x: 0, y: 0 },
             }
         ],
         compiledFunc: () => { },

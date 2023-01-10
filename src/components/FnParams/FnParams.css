@@ -4,32 +4,19 @@
     margin: 10px;
 }
 
-/* all first div of .BiParams */
-.FnParams>div {
+.FnParams .parameters {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+.FnParams .param {
     display: flex;
     flex-direction: row;
     justify-content: start;
     align-items: center;
     margin: 5px;
-}
-
-.FnParams .Point {
-    margin: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: flex-start;
-}
-
-.FnParams .Point .data {
-    margin: 5px;
-    display: flex;
-    flex-direction: row;
-}
-
-.FnParams .Point .data>.pointValue {
-    width: 70px;
-    margin: 5px;
+    width: min-content;
     border-radius: 15px;
     border: none;
     background: rgba(0, 0, 0, 0.3);
@@ -37,45 +24,29 @@
     color: rgba(255, 255, 255, 0.3);
 }
 
-.FnParams .Point .data>.pointValue>input {
+.FnParams .param input[type="number"] {
     width: 40px;
     border: none;
     text-align: center;
     text-decoration: none;
     outline: none;
-    background: transparent;
-    color: #ecf0f1;
-    text-align: left;
-}
-
-.FnParams .data {
-    margin: 5px;
-    border-radius: 15px;
-    border: none;
     background: rgba(0, 0, 0, 0.3);
-    padding: 7px;
-    color: rgba(255, 255, 255, 0.3);
-}
-
-.FnParams .data input {
-    width: 40px;
-    border: none;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    background: transparent;
+    border-radius: 10px;
     color: #ecf0f1;
-    text-align: left;
-    padding-left: 5px;
+    text-align: right;
+    padding: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
-.tooltip {
+.label {
     position: relative;
     display: inline-block;
-    border-bottom: 1px dotted black;
+    margin-right: 5px;
+    height: min-content;
 }
 
-.tooltip .tooltiptext {
+.label .tooltip {
     visibility: hidden;
     background-color: rgb(46, 43, 43);
     color: #fff;
@@ -94,16 +65,6 @@
 }
 
 
-.tooltip:hover .tooltiptext {
+.label:hover .tooltip {
     visibility: visible;
-}
-
-.FnParams input::-webkit-outer-spin-button,
-.FnParams input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-.FnParams input[type=number] {
-    -moz-appearance: textfield;
 }

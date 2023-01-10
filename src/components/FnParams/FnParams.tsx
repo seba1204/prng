@@ -3,109 +3,77 @@ import { Param, ParamValue, Point } from "../../constants/types";
 import "./FnParams.css";
 import { shorten } from './FnParams.utils';
 
+import InputNumber from "../InputNumber";
 import { defaultProps, propsTypes } from "./FnParams.props";
 
 const INPUT_TYPE = {
     number: 'number',
     string: 'text',
     boolean: 'checkbox',
-    point: 'point',
-    color: 'color'
-
+    Point: 'point',
+    Color: 'color'
 }
+
+type onChangeFn = (name: string, value: ParamValue) => void;
 
 const FnParams = (props: propsTypes) => {
 
-    const { params } = props;
+    const { params, is3D } = props;
 
 
-    const displayNumberParam = (param: Param<number>, onChange?: (name: string, value: number) => void) => {
+    const displayNumberParam = (param: Param<number>, onChange?: onChangeFn) => {
 
-        const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            // check if value is a number
-            if (isNaN(Number(e.target.value))) {
-                return;
-            }
-
-            // if onChange is defined, use it, else use the default onParamChange
+        const handleChange = (value: number) => {
             if (onChange) {
-                onChange(param.name, Number(e.target.value));
+                onChange(param.name, value);
             } else {
-                props.onParamChange(param.name, Number(e.target.value));
+                props.onParamChange(param.name, value)
             }
         }
 
-
         return (
-            <input
-                type="number"
+            <InputNumber
                 value={param.value}
-                onChange={handleChange}
+                onNumberChange={v => handleChange(Number(v))}
             />
-        );
+        )
     };
 
-    const displayStringParam = (param: Param<string>) => {
-
-        const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            props.onParamChange(param.name, e.target.value);
-        }
-
-
-        return (
-            <input
-                type="text"
-                value={param.value}
-                onChange={handleChange}
-            />
-        );
-    };
-
-
-    const displayBooleanParam = (param: Param<boolean>) => {
-
-        const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            props.onParamChange(param.name, e.target.checked);
-        }
-
-        return (
-            <input
-                type="checkbox"
-                checked={param.value}
-                onChange={handleChange}
-            />
-        );
-
-    };
 
     const displayPointParam = (param: Param<Point>, is3D: boolean) => {
 
-        const handleChange = (coordName: string, value: number) => {
-            const newPoint = { ...param.value };
-            newPoint[coordName as keyof Point] = value;
+        const onCoordValueChange = (name: string, value: ParamValue) => {
+            if (typeof value !== 'number') return;
+            const { x, y, z } = param.value;
+            const newPoint = {
+                x: name === 'x' ? value : x,
+                y: name === 'y' ? value : y,
+                z: name === 'z' ? value : z
+            }
             props.onParamChange(param.name, newPoint);
         }
-
         const displayPoint = (point: Point) => {
             const { x, y, z } = point;
+            const params = [
+                {
+                    name: 'x',
+                    value: x,
+                    type: 'number'
+                },
+                {
+                    name: 'y',
+                    value: y,
+                    type: 'number'
+                }
+            ]
+            is3D && params.push({
+                name: 'z',
+                value: z || 0,
+                type: 'number'
+            })
             return (
                 <>
-                    {displayNumberParam({
-                        name: 'x',
-                        value: x,
-                        type: 'number'
-                    }, handleChange)}
-                    {displayNumberParam({
-                        name: 'y',
-                        value: y,
-                        type: 'number'
-                    }, handleChange)}
-                    {is3D && displayNumberParam({
-                        name: 'z',
-                        value: z || 0,
-                        type: 'number'
-                    }, handleChange)}
-
+                    {displayParams(params as Param<ParamValue>[], false, onCoordValueChange)}
                 </>
             );
         }
@@ -118,79 +86,66 @@ const FnParams = (props: propsTypes) => {
 
     };
 
-    // generic function with T type
-    const genericDisplay = <T extends number | string | boolean>(param: Param<T>) => {
-        return (
-            <input
-                type={ }
-                value={param.value}
-                onChange={(e) => props.onParamChange(param.name, e.target.value as unknown as T)}
-            />
-
-        );
-    }
-
-
+    const genericDisplay = <T extends ParamValue>(param: Param<T>) => (
+        <input
+            type={INPUT_TYPE[param.type]}
+            value={param.value as unknown as string}
+            checked={param.type === 'boolean' && param.value as unknown as boolean}
+            onChange={(e) => props.onParamChange(param.name, e.target.value as unknown as T)}
+        />
+    )
 
     const displayLabelWithTooltip = (paramName: string) => {
 
         const { name, shortened } = shorten(paramName)
 
         return (
-            <label>{name}:
+            <label className="label">{name}:
                 {shortened && <span className="tooltip">{paramName}</span>}
             </label>
-
         );
     };
 
 
-    const displayData = (param: Param<ParamValue>): ReactNode => {
-
-
-        let p;
+    const displayData = (param: Param<ParamValue>, onChange?: onChangeFn): ReactNode => {
+        // console.log(param.type)
         switch (param.type) {
             case "number":
-                p = <>{displayNumberParam(param)}</>;
+                return displayNumberParam(param as Param<number>, onChange);
             case "string":
-                p = <>{displayStringParam(param)}</>;
-            case "boolean":
-                p = <>{displayBooleanParam(param)}</>;
-            case "Point":
-                p = <>{displayPointParam(param)}</>;
             case "Color":
-                p = <>{displayColorParam(param)}</>;
+            case "boolean":
+                return <>{genericDisplay(param)}</>;
+            case "Point":
+                return <>{displayPointParam(param as Param<Point>, is3D)}</>;
             default:
-                p = <></>;
+                return <></>;
         }
-
-        return (
-            <>
-                {displayLabelWithTooltip(param.name)}
-                {p}
-            </>
-        );
     }
 
-
-
-
-    const displayParams = () => {
-        return params.map((param: Param<ParamValue>, index: number) => (
-            <div key={index} className="param">
-                {displayData(param)}
-            </div>
-        ));
-
+    const displayParams = (params: Param[], showPoint = false, onChange?: onChangeFn) => {
+        // if showPoint is true, display only the Point params
+        // else display all other params
+        return params
+            .filter(({ type }) => showPoint ? type === 'Point' : type !== 'Point')
+            .map((param: Param<ParamValue>, index: number) => (
+                <div key={index} className="param">
+                    {displayLabelWithTooltip(param.name)}
+                    {displayData(param, onChange)}
+                </div>
+            )
+            );
     };
-
-
-
 
     return (
         <div className="FnParams">
             <h3>Function params: </h3>
-            {displayParams()}
+            <div className="parameters">
+                {displayParams(params)}
+            </div>
+            <div className="parameters">
+                {displayParams(params, true)}
+            </div>
         </div>
     );
 };

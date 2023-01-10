@@ -55,27 +55,6 @@
     cursor: pointer;
 }
 
-.color .inputColor {
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    background: none;
-    border: 0;
-    outline: none;
-    cursor: pointer;
-    padding: 0;
-    border-radius: 10px;
-}
-
-.color .inputColor::-webkit-color-swatch {
-    border-radius: 15px;
-    border: none;
-}
-
-.color .inputColor::-moz-color-swatch {
-    border-radius: 15px;
-    border: none;
-}
 
 input {
     accent-color: var(--color);

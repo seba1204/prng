@@ -10,7 +10,7 @@ type propsTypes = {
 const defaultProps = {
     className: "",
     is3D: false,
-    onParamChange: () => { },
+    onParamChange: (name: string, value: any) => { },
 }
 
 export { propsTypes, defaultProps };

@@ -9,12 +9,13 @@ import { Layout, VirtualItem } from './lib/SUI';
 import BiParams from './components/BiParams';
 import Canvas from './components/WebGL/Canvas';
 import functions from './constants';
-import { Func, Point } from './constants/types';
+import { Func, ParamValue } from './constants/types';
 import { gaussian } from './utils/Prng';
 import Engine from './webgl';
 
 const App = () => {
-    const [points, setPoints] = useState<Point[]>([]);
+
+    // --------------------------------- state ---------------------------------
     const [nbOfPoints, setNbOfPoints] = useState(5000);
     const [is3D, setIs3D] = useState(false);
     const [color, setColor] = useState("#16a085");
@@ -35,13 +36,16 @@ const App = () => {
 
         engine.updatePoints(points)
 
-        setPoints(points);
+        // update histogram
+        // graphs.updatePoints(points)
     }
 
     useEffect(() => {
         updateRandomData()
     }, [nbOfPoints])
 
+
+    // ----------------------------- handle events -----------------------------
     const onColorChange = (color: string) => {
         setColor(color);
         // engine.updateColor(color)
@@ -51,6 +55,40 @@ const App = () => {
         setNbOfPoints(nbOfPoints);
     }
 
+    const onFnParamChange = (name: string, value: ParamValue) => {
+
+        const fn = fnList[currentFnId];
+
+        const params = fn.params.map(p => {
+            if (p.name === name) {
+                return {
+                    ...p,
+
+                    value
+                }
+            }
+
+            return p;
+        })
+
+        const newFn = {
+            ...fn,
+            params
+        }
+
+        const newFnList = fnList.map((f, i) => {
+            if (i === currentFnId) {
+                return newFn;
+            }
+
+            return f;
+        })
+
+        setFnList(newFnList);
+
+    }
+
+    // -------------------------------- render ---------------------------------
 
     return (
         <Layout desktopLayout={desktop()} mobileLayout={mobile()}>
@@ -84,6 +122,7 @@ const App = () => {
                 <FnParams
                     params={fnList[currentFnId].params}
                     is3D={is3D}
+                    onParamChange={onFnParamChange}
                 />
             </VirtualItem>
 
