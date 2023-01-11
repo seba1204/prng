@@ -1,4 +1,4 @@
-function(mean: number = 0, stdDev: number = 0.2): number {
+function(mean: Point, stdDev: Point): number {
   let u = 0, v = 0;
   while (u === 0) u = Math.random();
   while (v === 0) v = Math.random();

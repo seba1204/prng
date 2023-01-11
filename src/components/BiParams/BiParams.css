@@ -1,0 +1,68 @@
+.BiParams {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+/* all first div of .BiParams */
+.BiParams>div {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    margin: 5px;
+}
+
+.BiParams>div>label {
+    margin: 5px;
+}
+
+.BiParams>.nbOfPoints {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: flex-start;
+    margin: 5px;
+}
+
+.nbOfPoints .slider {
+    -webkit-appearance: none;
+    width: 98%;
+    height: 15px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    outline: none;
+}
+
+
+.nbOfPoints .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: var(--color);
+    cursor: pointer;
+}
+
+.nbOfPoints .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: var(--color);
+    cursor: pointer;
+}
+
+
+input {
+    accent-color: var(--color);
+}
+
+.func select {
+    background: var(--color);
+    color: var(--textColor);
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    padding: 5px;
+}

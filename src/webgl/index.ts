@@ -1,3 +1,4 @@
-import Engine from "./Engine";
+import CanvasEngine from './canvas';
+import GraphEngine from './graph';
 
-export default Engine;
+export { CanvasEngine, GraphEngine };

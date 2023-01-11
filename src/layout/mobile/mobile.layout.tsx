@@ -20,11 +20,11 @@ const mobile = () => {
             // the canvas will be set to 100px, then there will be no more scrolling
             // and the canvas will be set to 300px, and we enter an infinite loop
             // so we set the canvas to 100px only if the difference is greater than 100px
-            if ((totalHeight - screenHeight) > 100) {
+            if ((totalHeight - screenHeight) > 200) {
                 setHeight(100);
             }
 
-        } else {
+        } else if (top === 0) {
             setHeight(300);
         }
     }

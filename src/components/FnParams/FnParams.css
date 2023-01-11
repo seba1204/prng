@@ -1,0 +1,70 @@
+.FnParams {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.FnParams .parameters {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+.FnParams .param {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    margin: 5px;
+    width: min-content;
+    border-radius: 15px;
+    border: none;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 7px;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.FnParams .param input[type="number"] {
+    width: 40px;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    color: #ecf0f1;
+    text-align: right;
+    padding: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.label {
+    position: relative;
+    display: inline-block;
+    margin-right: 5px;
+    height: min-content;
+}
+
+.label .tooltip {
+    visibility: hidden;
+    background-color: rgb(46, 43, 43);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+
+    /* Position the tooltip over the label*/
+    top: -115%;
+    left: 10%;
+
+}
+
+
+.label:hover .tooltip {
+    visibility: visible;
+}

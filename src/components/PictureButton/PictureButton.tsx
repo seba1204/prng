@@ -10,11 +10,24 @@ import { defaultProps, propsTypes } from './PictureButtonProps';
 
 
 const PictureButton = (props: propsTypes) => {
+    const { tooltip } = props
+    const displayTooltip = () => {
+        if (tooltip) {
+            return (
+                <span className="PictureButton__tooltiptext">
+                    {tooltip}
+                </span>
+            )
+        } else {
+            return <></>
+        }
+    }
     return (
-        <div className="PictureButton">
-            <button className={`button ${props.enabled && 'enabled'}`} onClick={props.onClick}>
+        <div className="PictureButton__container">
+            {displayTooltip()}
+            <div className={`PictureButton__button ${props.enabled && 'enabled'}`} onClick={props.onClick}>
                 {props.image}
-            </button>
+            </div>
         </div >
     );
 };

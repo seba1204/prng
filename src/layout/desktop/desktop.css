@@ -44,6 +44,7 @@
 
 .desktop__root>.leftPanel>.CODE {
     grid-area: code;
+    /* background-color: #161B22; */
 }
 
 .desktop__root>.rightPanel {
@@ -60,6 +61,7 @@
 
 .desktop__root>.rightPanel>.WEBGL {
     grid-area: webgl;
+    overflow: hidden;
 }
 
 .desktop__root>.rightPanel>.GRAPHS {

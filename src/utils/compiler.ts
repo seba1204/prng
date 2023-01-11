@@ -11,7 +11,7 @@ const compile = (source: string): TranspileOutput => {
 }
 
 // execute function with varying parameters
-const execute = (compiled: string): any => {
+const createFunc = (compiled: string): any => {
     try {
         return new Function('"use strict";return (' + compiled + ')')();
     } catch (error) {
@@ -19,4 +19,4 @@ const execute = (compiled: string): any => {
     }
 }
 
-export { compile, execute };
+export { compile, createFunc };

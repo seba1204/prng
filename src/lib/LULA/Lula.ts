@@ -1,5 +1,6 @@
+import { Point } from '../../constants/types';
 import Attribute from './Attribute';
-import { Attributes, color, Line, Point, Primitive, shaderType, Triangle } from './types';
+import { Attributes, color, Line, Primitive, shaderType, Triangle } from './types';
 
 /**
  * Lula is a WebGL wrapper.
@@ -14,6 +15,7 @@ export default class Lula {
     private gl: WebGLRenderingContext;
     private _program: WebGLProgram | null = null;
     private _attributes: Attributes = {};
+    private _uniforms: Attributes = {};
     private _clearColor: color = [0, 0, 0, 0];
 
     constructor(canvas: HTMLCanvasElement) {
@@ -101,6 +103,30 @@ export default class Lula {
 
     public bindTriangles(name: string) {
         this.createAttibute(name, 'TRIANGLES');
+    }
+
+    public bindUniform(name: string) {
+        this.gl.uniform1f(this.gl.getUniformLocation(this.program, name), 0);
+    }
+
+    public updateUniform(name: string, value: number[]) {
+        switch (value.length) {
+            case 1:
+                this.gl.uniform1f(this.gl.getUniformLocation(this.program, name), value[0]);
+                break;
+            case 2:
+                this.gl.uniform2f(this.gl.getUniformLocation(this.program, name), value[0], value[1]);
+                break;
+            case 3:
+                this.gl.uniform3f(this.gl.getUniformLocation(this.program, name), value[0], value[1], value[2]);
+                break;
+            case 4:
+                this.gl.uniform4f(this.gl.getUniformLocation(this.program, name), value[0], value[1], value[2], value[3]);
+                break;
+            default:
+                throw new Error('Invalid uniform value');
+
+        }
     }
 
     public updatePoints(name: string, points: Point[]) {
