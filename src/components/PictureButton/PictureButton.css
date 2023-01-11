@@ -1,19 +1,56 @@
-.PictureButton {
-    padding: 6px 5px 5px 5px;
+.PictureButton__container {
+    padding: 5px 5px 5px 5px;
+    width: min-content;
+    height: min-content;
 }
 
-.button {
-    height: 100%;
-    width: 100%;
-    padding: 5px;
+.PictureButton__button {
+    height: 50px;
+    width: 50px;
+    padding: 0;
     margin: 0;
     border: 0;
-    background-color: rgba(46, 204, 113, 0);
-    color: #ecf0f1;
-    border-radius: 5px;
+    background: var(--color);
+    color: var(--textColor);
+    border-radius: 25px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.button:hover {
+
+
+.PictureButton__button:hover {
     cursor: pointer;
     filter: brightness(50%);
+}
+
+.PictureButton__container {
+    position: relative;
+    display: inline-block;
+}
+
+.PictureButton__container .PictureButton__tooltiptext {
+    visibility: hidden;
+    width: min-content;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    top: 20%;
+    right: 100%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 9999;
+}
+
+.PictureButton__container:hover .PictureButton__tooltiptext {
+    visibility: visible;
+    opacity: 1;
 }

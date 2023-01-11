@@ -4,6 +4,7 @@ type propsTypes = {
     image?: ReactNode;
     enabled?: boolean;
     onClick?: () => void;
+    tooltip?: string;
 } & typeof defaultProps & React.HTMLAttributes<HTMLDivElement>;
 
 const defaultProps = {

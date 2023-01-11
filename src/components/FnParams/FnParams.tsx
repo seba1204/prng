@@ -86,11 +86,15 @@ const FnParams = (props: propsTypes) => {
 
     };
 
+    const isChecked = (param: Param<boolean>): boolean => {
+        return param.value;
+    }
+
     const genericDisplay = <T extends ParamValue>(param: Param<T>) => (
         <input
             type={INPUT_TYPE[param.type]}
             value={param.value as unknown as string}
-            checked={param.type === 'boolean' && param.value as unknown as boolean}
+            checked={param.type === 'boolean' && isChecked(param as Param<boolean>)}
             onChange={(e) => props.onParamChange(param.name, e.target.value as unknown as T)}
         />
     )
@@ -108,7 +112,6 @@ const FnParams = (props: propsTypes) => {
 
 
     const displayData = (param: Param<ParamValue>, onChange?: onChangeFn): ReactNode => {
-        // console.log(param.type)
         switch (param.type) {
             case "number":
                 return displayNumberParam(param as Param<number>, onChange);

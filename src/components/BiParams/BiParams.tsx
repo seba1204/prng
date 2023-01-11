@@ -19,38 +19,19 @@ const BiParams = (props: propsTypes) => {
             (<option key={index} value={option}>{option}</option>)
         )
     }
-    const container = React.useRef(null);
     const [nbOfPoints, setNbOfPoints] = React.useState(props.nbOfPoints);
 
     const onColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (container.current) {
-            const r = container.current as HTMLInputElement;
-            r.style.setProperty('--color', e.target.value);
-            // if color is light, set text color to black, else white
-            const color = e.target.value;
-            const r1 = parseInt(color.slice(1, 3), 16);
-            const g1 = parseInt(color.slice(3, 5), 16);
-            const b1 = parseInt(color.slice(5, 7), 16);
-            const luma = 0.2126 * r1 + 0.7152 * g1 + 0.0722 * b1;
-            if (luma > 128) {
-                r.style.setProperty('--textColor', 'black');
-            }
-            else {
-                r.style.setProperty('--textColor', 'white');
-            }
-
-        }
         props.onColorChange(e.target.value)
     }
 
     return (
-        <div className="BiParams" ref={container}>
+        <div className="BiParams">
             <div className="func">
                 <label>Function: </label>
                 <select value={options[props.currentFnId]} onChange={onFnChange}>
                     {displayOptions()}
                 </select>
-
             </div>
             <div className="nbOfPoints">
                 <label>Number of points ({nbOfPoints}): </label>
@@ -63,7 +44,6 @@ const BiParams = (props: propsTypes) => {
                     value={nbOfPoints}
                     onChange={(e) => setNbOfPoints(parseInt(e.target.value))}
                     onMouseUp={() => {
-                        console.log(nbOfPoints);
                         props.onNbOfPointsChange(nbOfPoints)
                     }}
                 />

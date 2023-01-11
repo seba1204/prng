@@ -1,6 +1,4 @@
 .BiParams {
-    --color: #16A085;
-    --textColor: white;
     display: flex;
     flex-direction: column;
     margin: 10px;
