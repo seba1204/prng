@@ -1,7 +1,7 @@
-import Engine from "../../webgl";
+import { CanvasEngine } from "../../webgl";
 
 type propsTypes = {
-    engine: Engine,
+    engine: CanvasEngine,
     onClick: () => void,
 
 } & typeof defaultProps;

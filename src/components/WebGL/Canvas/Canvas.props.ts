@@ -1,4 +1,4 @@
-import Engine from '../../../webgl';
+import { Engine } from '../../../lib';
 
 type propsTypes = {
     engine: Engine;

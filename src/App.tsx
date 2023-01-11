@@ -10,7 +10,7 @@ import BiParams from './components/BiParams';
 import Canvas from './components/WebGL/Canvas';
 import functions from './constants';
 import { code_status, Func, Param, ParamValue, Point } from './constants/types';
-import Engine from './webgl';
+import { CanvasEngine } from './webgl';
 
 import { Compiler, Parser } from "./utils";
 
@@ -24,7 +24,7 @@ const App = () => {
     const [needToRun, setNeedToRun] = useState(false);
     const [fnList, setFnList] = useState<Func[]>(functions);
     const [status, setStatus] = useState<code_status>('idle');
-    const engine = useMemo(() => { return new Engine() }, []);
+    const engine = useMemo(() => { return new CanvasEngine() }, []);
 
     // --------------------------- logical functions ---------------------------
     const updateRandomData = () => {
