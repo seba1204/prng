@@ -4,7 +4,8 @@ const allowedTypes = ['number', 'string', 'boolean', 'Color', 'Point'];
 
 const parseParam = (param: string): Param => {
 
-    let paramType: string, paramName, paramDefaultValue;
+    let paramType: string, paramName;
+    let paramDefaultValue: any = undefined;
 
     // split on '=' to get the default value, if exists
     var name = param.split("=");
@@ -31,7 +32,6 @@ const parseParam = (param: string): Param => {
     // remove spaces
     paramName = paramName.trim();
     paramType = paramType.trim();
-    paramDefaultValue = paramDefaultValue && paramDefaultValue.trim();
 
     // set a value if default value is not set
     if (paramDefaultValue === undefined) {
@@ -50,9 +50,13 @@ const parseParam = (param: string): Param => {
                 break;
             case 'Point':
                 paramDefaultValue = { x: 0, y: 0, z: 0 };
+                break;
             default:
                 paramDefaultValue = '';
         }
+    } else {
+
+        paramDefaultValue = paramDefaultValue && paramDefaultValue.trim();
     }
     // check if paramType is one of the following: number, string, boolean, Color, Point
     let realParamType: StringParamValue;
@@ -62,7 +66,6 @@ const parseParam = (param: string): Param => {
     } else {
         realParamType = paRes as StringParamValue;
     }
-
     return ({
         name: paramName,
         type: realParamType,

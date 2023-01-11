@@ -9,7 +9,7 @@ import { Layout, VirtualItem } from './lib/SUI';
 import BiParams from './components/BiParams';
 import Canvas from './components/WebGL/Canvas';
 import functions from './constants';
-import { Func, ParamValue } from './constants/types';
+import { Func, Param, ParamValue, Point } from './constants/types';
 import Engine from './webgl';
 
 import { Compiler, Parser } from "./utils";
@@ -31,15 +31,32 @@ const App = () => {
     const updateRandomData = () => {
         const points = [];
         // create 1000 random points
-        console.log(fnList[currentFnId].compiledFunc)
-        for (let i = 0; i < nbOfPoints; i++) {
-            points.push({
-                x: fnList[currentFnId].compiledFunc(0, 0.2),
-                y: fnList[currentFnId].compiledFunc(0, 0.2)
-            })
+        const func = fnList[currentFnId].compiledFunc;
+        // create a xParams, yParams, zParams
+        const flattenParams = (params: Param[], coord: 'x' | 'y' | 'z') => {
+            return params.map(p => {
+                if (p.type === 'Point') {
+                    return (p.value as Point)[coord];
+                } else {
+                    return p.value;
+                }
+            });
+        }
+        const xParams = flattenParams(fnList[currentFnId].params, 'x');
+        const yParams = flattenParams(fnList[currentFnId].params, 'y');
+        const zParams = flattenParams(fnList[currentFnId].params, 'z');
+
+        if (func) {
+            for (let i = 0; i < nbOfPoints; i++) {
+                points.push({
+                    x: func(...xParams),
+                    y: func(...yParams),
+                })
+            }
+
+            engine.updatePoints(points)
         }
 
-        engine.updatePoints(points)
 
         // update histogram
         // graphs.updatePoints(points)
@@ -78,10 +95,25 @@ const App = () => {
                 setIsError(true);
                 return;
             }
+            // check if there is a change in params
+            // for each param, if it is the same type and same name, 
+            // then keep previous value, else set default value
 
+            const newParams = params.map(p => {
+                const oldParam = fn.params.find(oldP => oldP.name === p.name);
+                if (oldParam) {
+                    if (oldParam.type === p.type) {
+                        return {
+                            ...p,
+                            value: oldParam.value
+                        }
+                    }
+                }
+                return p;
+            })
             const newFn: Func = {
                 ...fn,
-                params,
+                params: newParams,
                 compiledFunc: compiledFunc
             }
 

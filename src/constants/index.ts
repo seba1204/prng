@@ -13,9 +13,9 @@ const fn: Func[] = [
                 value: { x: 0, y: 0 },
             },
             {
-                name: 'stDev',
+                name: 'stdDev',
                 type: 'Point',
-                value: { x: 0, y: 0 },
+                value: { x: 0.2, y: 0.2 },
             }
         ],
         compiledFunc: () => { },
