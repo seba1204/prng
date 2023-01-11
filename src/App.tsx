@@ -21,8 +21,7 @@ const App = () => {
     const [is3D, setIs3D] = useState(false);
     const [color, setColor] = useState("#16a085");
     const [currentFnId, setCurrentFnId] = useState(0);
-    const [needToCompile, setNeedToCompile] = useState(true);
-    const [needToRun, setNeedToRun] = useState(true);
+    const [needToRun, setNeedToRun] = useState(false);
     const [fnList, setFnList] = useState<Func[]>(functions);
     const [status, setStatus] = useState<code_status>('idle');
     const engine = useMemo(() => { return new Engine() }, []);
@@ -79,12 +78,16 @@ const App = () => {
         // graphs.updatePoints(points)
     }
 
-    const compileFn = (run: boolean = false) => {
+    const compileFn = (run: boolean = false, compile: boolean = false) => {
+        console.log(`compiling: ${compile}, running: ${run}`)
         setStatus('compiling')
-        if (!needToCompile) {
-            if (run) {
-                updateRandomData();
-            }
+
+        if (run) {
+            setNeedToRun(true);
+        }
+
+        if (!compile) {
+            console.log('no need to compile');
             setStatus('idle');
             return;
         }
@@ -104,7 +107,7 @@ const App = () => {
         }
 
         // update function
-        if (compiledFunc) {
+        if (compiledFunc.length > 0) {
 
             // parse params
             let params = [];
@@ -143,15 +146,16 @@ const App = () => {
 
                 return f;
             })
+            console.log('finction compiled')
             setFnList(newFnList);
-            setNeedToCompile(false);
+
+            setStatus('compiled');
+
+            setTimeout(() => {
+                setStatus('idle');
+            }, 2000);
         }
 
-        setStatus('compiled');
-
-        setTimeout(() => {
-            setStatus('idle');
-        }, 2000);
 
     }
 
@@ -159,7 +163,11 @@ const App = () => {
     // -------------------------------- effects --------------------------------
 
     useEffect(() => {
-        updateRandomData()
+        compileFn(true, true);
+    }, [currentFnId])
+
+    useEffect(() => {
+        setNeedToRun(true);
     }, [nbOfPoints])
 
     useEffect(() => {
@@ -167,7 +175,7 @@ const App = () => {
             updateRandomData();
             setNeedToRun(false);
         }
-    }, [setFnList])
+    }, [setFnList, needToRun])
 
     // ----------------------------- handle events -----------------------------
     const onColorChange = (color: string) => {
@@ -191,11 +199,9 @@ const App = () => {
 
         // engine.updateColor(color)
     }
-
     const onNbOfPointsChange = (nbOfPoints: number) => {
         setNbOfPoints(nbOfPoints);
     }
-
     const onFnParamChange = (name: string, value: ParamValue) => {
 
         const fn = fnList[currentFnId];
@@ -222,14 +228,11 @@ const App = () => {
         })
         setFnList(newFnList);
     }
-
     const onCompileClick = () => {
-        compileFn();
-        setNeedToCompile(true);
+        compileFn(false, true);
     }
     const onRunClick = () => {
-        setNeedToRun(true);
-        compileFn(true);
+        compileFn(true, true);
     }
     const onCodeChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         // update content in current fn
@@ -242,8 +245,6 @@ const App = () => {
             }
             return f;
         }))
-
-        setNeedToCompile(true);
     }
     // -------------------------------- render ---------------------------------
 
@@ -273,7 +274,6 @@ const App = () => {
                     onFnChange={(fn) => {
                         const index = fnList.findIndex(f => f.name === fn.name);
                         setCurrentFnId(index);
-                        setNeedToCompile(true);
                     }}
                 />
             </VirtualItem>
