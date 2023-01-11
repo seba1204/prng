@@ -8,7 +8,7 @@ import "./Code.css";
 
 const Code = (props: propsTypes) => {
 
-    const { onCompileClick, onRunClick, error, code, ...otherProps } = props;
+    const { onCompileClick, onRunClick, status, code, ...otherProps } = props;
 
     useEffect(() => {
         // force set dark mode on @uiw/react-textarea-code-editor
@@ -16,8 +16,9 @@ const Code = (props: propsTypes) => {
     }, [])
 
 
+
     return (
-        <div className={`Code__container${error ? ' Code__err' : ''}`}>
+        <div className={`Code__container Code__${status}`}>
 
             <CodeEditor
                 {...otherProps}

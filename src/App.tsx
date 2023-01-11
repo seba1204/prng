@@ -9,7 +9,7 @@ import { Layout, VirtualItem } from './lib/SUI';
 import BiParams from './components/BiParams';
 import Canvas from './components/WebGL/Canvas';
 import functions from './constants';
-import { Func, Param, ParamValue, Point } from './constants/types';
+import { code_status, Func, Param, ParamValue, Point } from './constants/types';
 import Engine from './webgl';
 
 import { Compiler, Parser } from "./utils";
@@ -24,11 +24,12 @@ const App = () => {
     const [needToCompile, setNeedToCompile] = useState(true);
     const [needToRun, setNeedToRun] = useState(true);
     const [fnList, setFnList] = useState<Func[]>(functions);
-    const [isError, setIsError] = useState(false);
+    const [status, setStatus] = useState<code_status>('idle');
     const engine = useMemo(() => { return new Engine() }, []);
 
     // --------------------------- logical functions ---------------------------
     const updateRandomData = () => {
+        setStatus('running');
         const points = [];
         // create 1000 random points
         const func = fnList[currentFnId].compiledFunc;
@@ -44,29 +45,47 @@ const App = () => {
         }
         const xParams = flattenParams(fnList[currentFnId].params, 'x');
         const yParams = flattenParams(fnList[currentFnId].params, 'y');
-        const zParams = flattenParams(fnList[currentFnId].params, 'z');
+        const zParams = is3D ? flattenParams(fnList[currentFnId].params, 'z') : [];
 
         if (func) {
             for (let i = 0; i < nbOfPoints; i++) {
-                points.push({
-                    x: func(...xParams),
-                    y: func(...yParams),
-                })
+                let point = undefined;
+                if (is3D) {
+                    point = {
+                        x: func(...xParams),
+                        y: func(...yParams),
+                        z: func(...zParams),
+                    }
+                } else {
+                    point = {
+                        x: func(...xParams),
+                        y: func(...yParams),
+                    }
+                }
+                if (point) {
+                    points.push(point);
+                } else {
+                    console.error('point is undefined');
+                    setStatus('error');
+                    return;
+                }
             }
 
             engine.updatePoints(points)
         }
-
+        setStatus('idle');
 
         // update histogram
         // graphs.updatePoints(points)
     }
 
     const compileFn = (run: boolean = false) => {
+        setStatus('compiling')
         if (!needToCompile) {
             if (run) {
                 updateRandomData();
             }
+            setStatus('idle');
             return;
         }
         const fn = fnList[currentFnId];
@@ -80,7 +99,7 @@ const App = () => {
 
         } catch (error) {
             console.error(error);
-            setIsError(true);
+            setStatus('error');
             return;
         }
 
@@ -92,7 +111,7 @@ const App = () => {
             try {
                 params = Parser.getParamsFromString(fn.content)
             } catch (error) {
-                setIsError(true);
+                setStatus('error');
                 return;
             }
             // check if there is a change in params
@@ -128,7 +147,11 @@ const App = () => {
             setNeedToCompile(false);
         }
 
-        setIsError(false);
+        setStatus('compiled');
+
+        setTimeout(() => {
+            setStatus('idle');
+        }, 2000);
 
     }
 
@@ -227,7 +250,10 @@ const App = () => {
     return (
         <Layout desktopLayout={desktop()} mobileLayout={mobile()}>
             <VirtualItem id={ids.WEBGL} >
-                <Canvas engine={engine} />
+                <Canvas
+                    engine={engine}
+                    onRandomizeClick={updateRandomData}
+                />
             </VirtualItem>
 
             <VirtualItem id={ids.GRAPHS}>
@@ -266,7 +292,7 @@ const App = () => {
                     onChange={onCodeChange}
                     onCompileClick={onCompileClick}
                     onRunClick={onRunClick}
-                    error={isError}
+                    status={status}
                 />
             </VirtualItem>
         </Layout>

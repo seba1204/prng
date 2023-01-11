@@ -1,8 +1,9 @@
 import React from "react";
+import { code_status } from "../../constants/types";
 
 type propsTypes = {
     code: string;
-    error: boolean,
+    status?: code_status,
     onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
     onCompileClick?: () => void
     onRunClick?: () => void
@@ -10,7 +11,7 @@ type propsTypes = {
 } & typeof defaultProps;
 
 const defaultProps = {
-    error: false,
+    status: 'idle',
     onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => { },
     onCompileClick: () => { },
     onRunClick: () => { }

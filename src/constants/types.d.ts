@@ -41,3 +41,6 @@ export type Func = {
     params: Param[],
     compiledFunc: Function,
 }
+
+
+export type code_status = 'idle' | 'compiling' | 'compiled' | 'running' | 'error';

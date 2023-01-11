@@ -1,12 +1,13 @@
 import React from 'react';
-import { defaultProps, propsTypes } from './Canvas.props';
-
+import { RotateCcw } from 'react-feather';
+import { PictureButton } from '../../PictureButton';
 import './Canvas.css';
+import { defaultProps, propsTypes } from './Canvas.props';
 
 const Canvas = (props: propsTypes) => {
 
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
-
+    const { onRandomizeClick } = props;
 
     React.useEffect(() => {
         const canvas = canvasRef.current;
@@ -16,8 +17,17 @@ const Canvas = (props: propsTypes) => {
     }, []);
 
     return (
-        <div className={"canvas-container"}>
-            <canvas ref={canvasRef} id={"canvas"} />
+        <div className='Webgl__container'>
+            <div className={"canvas-container"}>
+                <canvas ref={canvasRef} id={"canvas"} />
+            </div>
+            <div className="Webgl__updateButton">
+                <PictureButton
+                    onClick={onRandomizeClick}
+                    image={<RotateCcw />}
+                    tooltip="Ramdomize"
+                />
+            </div>
         </div>
     )
 
