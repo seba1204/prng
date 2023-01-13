@@ -1,4 +1,6 @@
 import React, { ReactElement, ReactNode } from 'react';
+import Item from '../Item';
+import VirtualItem from '../VirtualItem';
 
 /**
     * Return lowercase type of child.
@@ -28,8 +30,9 @@ const getVirtualItems = (children: ReactNode) => {
     const safeChildren: any[] = !Array.isArray(children) ? [children] : children;
 
     // Filter the children to only return VirtualItem children
+    const myComponentType = (<VirtualItem id="" > </VirtualItem>).type;
     return safeChildren.filter(
-        (child: ReactElement) => getChildType(child) === 'virtualitem'
+        (child: ReactElement) => child.type === myComponentType
     );
 }
 
@@ -40,33 +43,31 @@ const getVirtualItems = (children: ReactNode) => {
  * @returns all elements from the layout with Items replaced by VirtualItems from the children
  */
 const displayLayout = (layout: ReactElement, virtualItemList: any[]) => {
-
     let layoutChildren = layout.props.children;
 
     // safety check
-    if (!layoutChildren)
+    if (!layoutChildren) {
         return null;
+    }
     if (!Array.isArray(layoutChildren))
         layoutChildren = [layoutChildren] as ReactElement[];
-
 
     // foreach child in current layout children
     //  - replace the Items with the VirtualItems
     //  - render all other child recursively search for nested Items
     const newChildren = layoutChildren.map((child: ReactElement, i: number) => {
-        if (getChildType(child) === 'item') {
-
+        const myComponentType = (<Item id={""} />).type;
+        if (child.type === myComponentType) {
+            // if (getChildType(child) === 'item') {
             // find the actual item with the same id
             const matchItems = virtualItemList.filter((c: ReactElement) => c.props.id === child.props.id);
 
             // if no item with the same id is found, return null
             if (matchItems.length < 1) {
-                console.log(`No item with id ${child.props.id} found`);
                 return null;
             }
             // if multiple items with the same id are found, return null
             else if (matchItems.length > 1) {
-                console.log(`Multiple items with id ${child.props.id} found`);
                 return null;
             }
             // if only one item with the same id is found, return the item with the props from the layout item

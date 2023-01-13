@@ -71,6 +71,7 @@ export const module = {
             use: 'json-loader'
         },
     ],
+    // don't parse typescript files with babel
     noParse: [require.resolve('typescript/lib/typescript.js')],
 };
 
@@ -108,6 +109,5 @@ export const plugins = [
     // Use ForkTsCheckerWebpackPlugin to speed up compilation and type checking
     // by running it in a separate process and caching results.
     new ForkTsCheckerWebpackPlugin(),
-
 
 ];

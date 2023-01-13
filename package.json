@@ -2,7 +2,8 @@
   "name": "prng",
   "version": "0.1.0",
   "description": "Pseudo-random Number Generators",
-  "main": "src/tsx.js",
+  "main": "src/index.tsx",
+  "module": "dist/index.js",
   "scripts": {
     "start": "webpack serve --port 3000",
     "build": "NODE_ENV=production webpack"
